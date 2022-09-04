@@ -3,17 +3,17 @@ package com.cbxs123.code;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author cbxs123
- * @title OfferSpecial_119_220903.java
+ * @title Offer2_119_220903.java
  * @description https://doocs.github.io/leetcode/#/lcof2/README
  * @date 2022/9/3 11:05
  **/
 @Slf4j
-public class OfferSpecial_119_220903 {
+public class Offer2_119_220903 {
 
     // 剑指 Offer II 001. 整数除法#2
     @Test
@@ -155,6 +155,91 @@ public class OfferSpecial_119_220903 {
     // 剑指 Offer II 007. 数组中和为 0 的三个数#3
     @Test
     void code0007() {
+        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+        int n = nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < n - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int left = i + 1, right = n - 1;
+            while (left < right) {
+                int cur = nums[i] + nums[left] + nums[right];
+                if (cur < 0) {
+                    left++;
+                } else if (cur > 0) {
+                    right--;
+                } else {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+                    left++;
+                    right--;
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 008. 和大于等于 target 的最短子数组#2
+    @Test
+    void code0008() {
+        int[] nums = new int[]{2, 3, 1, 2, 4, 3};
+        int target = 7;
+        int n = nums.length, result = Integer.MAX_VALUE, sum = 0;
+        int left = 0, right = 0;
+        while (right < n) {
+            sum += nums[right++];
+            while (sum >= target) {
+                result = Math.min(result, right - left);
+                sum -= nums[left++];
+            }
+        }
+        result = result == Integer.MAX_VALUE ? 0 : result;
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 009. 乘积小于 K 的子数组#2
+    @Test
+    void code0009() {
+        int[] nums = new int[]{10, 5, 2, 6};
+        int target = 100, n = nums.length;
+        int result = 0;
+        int sum = 1, left = 0, right = 0;
+        while (right < n) {
+            sum *= nums[right++];
+            while (sum >= target && left < right) {
+                sum /= nums[left++];
+            }
+            result += right - left;
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 010. 和为 k 的子数组#3
+    @Test
+    void code0010() {
+        int[] nums = new int[]{1, 2, 1, 2, 1, 2};
+        int target = 3;
+        Map<Integer, Integer> map = new HashMap<>();
+        int result = 0, sum = 0;
+        map.put(0, 1);
+        for (int num : nums) {
+            sum += num;
+            result += map.getOrDefault(sum - target, 0);
+            map.merge(sum, 1, Integer::sum);
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 011. 0 和 1 个数相同的子数组#3
+    @Test
+    void code0011() {
 
     }
 
