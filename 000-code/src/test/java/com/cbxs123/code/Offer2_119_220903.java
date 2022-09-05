@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author cbxs123
@@ -240,6 +239,69 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 011. 0 和 1 个数相同的子数组#3
     @Test
     void code0011() {
+        int[] nums = new int[]{0, 1, 0, 1, 1, 0, 0, 1};
+        int result = 0, sum = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1);
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i] == 1 ? 1 : -1;
+            if (map.containsKey(sum)) {
+                result = Math.max(result, i - map.get(sum));
+            } else {
+                map.put(sum, i);
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 012. 左右两边子数组的和相等#2
+    @Test
+    void code0012() {
+        int[] nums = new int[]{1, 2, 5, 1, 1, 1};
+        int result = -1, n = nums.length;
+        int[] sum = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+        for (int i = 0; i < n; i++) {
+            if (sum[i] + sum[i + 1] == sum[n]) {
+                result = i;
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 013. 二维子矩阵的和
+    @Test
+    void code0013() {
+        NumMatrix_0013 numMatrix = new NumMatrix_0013(new int[][]{{3, 0, 1, 4, 2}, {5, 6, 3, 2, 1}, {1, 2, 0, 1, 5}, {4, 1, 0, 1, 7},
+                {1, 0, 3, 0, 5}});
+        log.info("result: {}", numMatrix.sumRegion(2, 1, 4, 3));
+        log.info("result: {}", numMatrix.sumRegion(1, 1, 2, 2));
+        log.info("result: {}", numMatrix.sumRegion(1, 2, 2, 4));
+    }
+
+    class NumMatrix_0013 {
+        private int[][] pre;
+
+        public NumMatrix_0013(int[][] matrix) {
+            int m = matrix.length, n = matrix[0].length;
+            pre = new int[m + 1][n + 1];
+            for (int i = 1; i <= m; i++) {
+                for (int j = 1; j <= n; j++) {
+                    pre[i][j] = pre[i - 1][j] + pre[i][j - 1] - pre[i - 1][j - 1] + matrix[i - 1][j - 1];
+                }
+            }
+        }
+
+        public int sumRegion(int row1, int col1, int row2, int col2) {
+            return pre[row2 + 1][col2 + 1] - pre[row2 + 1][col1] - pre[row1][col2 + 1] + pre[row1][col1];
+        }
+    }
+
+    // 剑指 Offer II 014. 字符串中的变位词#3
+    @Test
+    void code0014() {
 
     }
 
