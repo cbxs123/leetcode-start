@@ -302,7 +302,33 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 014. 字符串中的变位词#3
     @Test
     void code0014() {
+        String s1 = "dc", s2 = "abcdefg";
+        int n1 = s1.length(), n2 = s2.length();
+        boolean result = false;
+        if (n1 <= n2) {
+            int[] window = new int[26];
+            for (int i = 0; i < n1; i++) {
+                window[s1.charAt(i) - 'a']++;
+                window[s2.charAt(i) - 'a']--;
+            }
+            if (check_0014(window)) {
+                result = true;
+            } else {
+                for (int i = n1; i < n2; i++) {
+                    window[s2.charAt(i) - 'a']--;
+                    window[s2.charAt(i - n1) - 'a']++;
+                    if (check_0014(window)) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
 
+    private boolean check_0014(int[] window) {
+        return Arrays.stream(window).allMatch(cnt -> cnt == 0);
     }
 
 }
