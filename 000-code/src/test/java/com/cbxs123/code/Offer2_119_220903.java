@@ -1,8 +1,11 @@
 package com.cbxs123.code;
 
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.InvokeDynamic;
+import org.checkerframework.common.value.qual.MinLen;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
 import java.util.*;
 
 /**
@@ -329,6 +332,98 @@ public class Offer2_119_220903 {
 
     private boolean check_0014(int[] window) {
         return Arrays.stream(window).allMatch(cnt -> cnt == 0);
+    }
+
+    // 剑指 Offer II 015. 字符串中的所有变位词#3
+    @Test
+    void code0015() {
+        String s1 = "ab", s2 = "ababa";
+        List<Integer> result = new ArrayList<>();
+        int n1 = s1.length(), n2 = s2.length();
+        if (n1 <= n2) {
+            int[] window = new int[26];
+            for (int i = 0; i < n1; i++) {
+                window[s1.charAt(i) - 'a']++;
+                window[s2.charAt(i) - 'a']--;
+            }
+            if (check_0015(window)) {
+                result.add(0);
+            }
+            for (int i = n1; i < n2; i++) {
+                window[s2.charAt(i) - 'a']--;
+                window[s2.charAt(i - n1) - 'a']++;
+                if (check_0015(window)) {
+                    result.add(i - n1 + 1);
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    private boolean check_0015(int[] window) {
+        return Arrays.stream(window).allMatch(xnt -> xnt == 0);
+    }
+
+    // 剑指 Offer II 016. 不含重复字符的最长子字符串#2
+    @Test
+    void code0016() {
+        String s = "abcabcbb";
+        int result = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        int n = s.length(), left = 0, right = 0;
+        while (right < n) {
+            char ch = s.charAt(right++);
+            map.merge(ch, 1, Integer::sum);
+            while (map.get(ch) > 1) {
+                map.merge(s.charAt(left++), -1, Integer::sum);
+            }
+            result = Math.max(result, right - left);
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 017. 含有所有字符的最短字符串#3
+    @Test
+    void code0017() {
+        String s = "abdecfgahb", t = "abc";
+        String result = "";
+        int n1 = s.length(), n2 = t.length();
+        if (n1 >= n2) {
+            Map<Character, Integer> need = new HashMap<>();
+            Map<Character, Integer> window = new HashMap<>();
+            for (char ch : t.toCharArray()) {
+                need.merge(ch, 1, Integer::sum);
+            }
+            int start = 0, len = Integer.MAX_VALUE;
+            int left = 0, right = 0;
+            while (right < n1) {
+                window.merge(s.charAt(right++), 1, Integer::sum);
+                while (check_0017(need, window)) {
+                    if (right - left < len) {
+                        len = right - left;
+                        start = left;
+                    }
+                    window.merge(s.charAt(left++), -1, Integer::sum);
+                }
+            }
+            result = len == Integer.MAX_VALUE ? "" : s.substring(start, start + len);
+        }
+        log.info("result: {}", result);
+    }
+
+    private boolean check_0017(Map<Character, Integer> need, Map<Character, Integer> window) {
+        for (Map.Entry<Character, Integer> entry : need.entrySet()) {
+            if (window.getOrDefault(entry.getKey(), 0) < entry.getValue()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 剑指 Offer II 018. 有效的回文#2
+    @Test
+    void code0018() {
+
     }
 
 }
