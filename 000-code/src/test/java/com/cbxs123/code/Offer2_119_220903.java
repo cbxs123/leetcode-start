@@ -1,5 +1,6 @@
 package com.cbxs123.code;
 
+import com.cbxs123.code.common.ListNode;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.implementation.InvokeDynamic;
 import org.checkerframework.common.value.qual.MinLen;
@@ -423,6 +424,131 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 018. 有效的回文#2
     @Test
     void code0018() {
+        String s = "race ae car";
+        int i = 0, j = s.length() - 1;
+        boolean result = true;
+        while (i < j) {
+            while (i < j && !Character.isLetterOrDigit(s.charAt(i))) {
+                i++;
+            }
+            while (i < j && !Character.isLetterOrDigit(s.charAt(j))) {
+                j--;
+            }
+            if (Character.toLowerCase(s.charAt(i)) != Character.toLowerCase(s.charAt(j))) {
+                result = false;
+                break;
+            }
+            i++;
+            j--;
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 019. 最多删除一个字符得到回文#2
+    @Test
+    void code0019() {
+        String s = "abcda";
+        boolean result = true;
+        for (int i = 0, j = s.length() - 1; i < j; i++, j--) {
+            if (s.charAt(i) != s.charAt(j)) {
+                result = check_0019(s, i + 1, j) || check_0019(s, i, j - 1);
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    private boolean check_0019(String s, int i, int j) {
+        for (; i < j; i++, j--) {
+            if (s.charAt(i) != s.charAt(j)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 剑指 Offer II 020. 回文子字符串的个数#3
+    @Test
+    void code0020() {
+        String s = "aaa";
+        StringBuilder sb = new StringBuilder("^#");
+        for (char ch : s.toCharArray()) {
+            sb.append(ch).append('#');
+        }
+        String t = sb.append('$').toString();
+        int n = t.length(), pos = 0, maxRight = 0;
+        int[] p = new int[n];
+        int result = 0;
+        for (int i = 1; i < n - 1; i++) {
+            p[i] = maxRight > i ? Math.min(maxRight - i, p[2 * pos - i]) : 1;
+            while (t.charAt(i - p[i]) == t.charAt(i + p[i])) {
+                p[i]++;
+            }
+            if (i + p[i] > maxRight) {
+                maxRight = i + p[i];
+                pos = i;
+            }
+            result += p[i] / 2;
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 021. 删除链表的倒数第 n 个结点#1
+    @Test
+    void code0021() {
+        ListNode head = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        int n = 2;
+        ListNode dumy = new ListNode(0, head);
+        ListNode fast = dumy, slow = dumy;
+        while (n-- > 0) {
+            fast = fast.next;
+        }
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+        log.info("result: {}", dumy.next);
+    }
+
+    // 剑指 Offer II 022. 链表中环的入口节点#2
+    @Test
+    void code0022() {
+        ListNode head = new ListNode().build(new int[]{3, 2, 0, -4});
+        ListNode slow = head, fast = head;
+        ListNode result = null;
+        boolean flag = false;
+        while (!flag && fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            flag = slow == fast;
+        }
+        if (flag) {
+            ListNode p = head;
+            while (p != slow) {
+                p = p.next;
+                slow = slow.next;
+            }
+            result = p;
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 023. 两个链表的第一个重合节点#1
+    @Test
+    void code0023() {
+        ListNode headA = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        ListNode headB = new ListNode().build(new int[]{6, 7, 3, 4, 5});
+        ListNode cur1 = headA, cur2 = headB;
+        while (cur1.val != cur2.val) {
+            cur1 = cur1 == null ? headB : cur1.next;
+            cur2 = cur2 == null ? headA : cur2.next;
+        }
+        log.info("result: {}", cur1);
+    }
+
+    // 剑指 Offer II 024. 反转链表#1
+    @Test
+    void code0024() {
 
     }
 
