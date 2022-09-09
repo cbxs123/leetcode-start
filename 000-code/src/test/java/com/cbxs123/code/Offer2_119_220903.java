@@ -1,12 +1,10 @@
 package com.cbxs123.code;
 
 import com.cbxs123.code.common.ListNode;
+import com.cbxs123.code.common.MultiNode;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.InvokeDynamic;
-import org.checkerframework.common.value.qual.MinLen;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.util.*;
 
 /**
@@ -549,6 +547,162 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 024. 反转链表#1
     @Test
     void code0024() {
+        ListNode head = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        ListNode pre = null, p = head;
+        while (p != null) {
+            ListNode q = p.next;
+            p.next = pre;
+            pre = p;
+            p = q;
+        }
+        log.info("result: {}", pre);
+    }
+
+    // 剑指 Offer II 025. 链表中的两数相加#2
+    @Test
+    void code0025() {
+        ListNode l1 = new ListNode().build(new int[]{7, 2, 4, 3});
+        ListNode l2 = new ListNode().build(new int[]{5, 6, 4});
+        Deque<Integer> s1 = new ArrayDeque<>();
+        Deque<Integer> s2 = new ArrayDeque<>();
+        while (l1 != null) {
+            s1.push(l1.val);
+            l1 = l1.next;
+        }
+        while (l2 != null) {
+            s2.push(l2.val);
+            l2 = l2.next;
+        }
+        int carray = 0;
+        ListNode result = new ListNode();
+        while (!s1.isEmpty() || !s2.isEmpty() || carray != 0) {
+            carray += (s1.isEmpty() ? 0 : s1.pop()) + (s2.isEmpty() ? 0 : s2.pop());
+            ListNode node = new ListNode(carray % 10, result.next);
+            result.next = node;
+            carray /= 10;
+        }
+        log.info("result: {}", result.next);
+    }
+
+    // 剑指 Offer II 026. 重排链表#3
+    @Test
+    void code0026() {
+        ListNode head = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        ListNode mid = middleNode_0026(head);
+        ListNode tmp = mid.next;
+        mid.next = null;
+        tmp = reverseList_0026(tmp);
+        head = mergeTwoLIsts_0026(head, tmp);
+        log.info("result: {}", head);
+    }
+
+    private ListNode middleNode_0026(ListNode head) {
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    private ListNode reverseList_0026(ListNode head) {
+        ListNode pre = null, cur = head;
+        while (cur != null) {
+            ListNode tmp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+        return pre;
+    }
+
+    private ListNode mergeTwoLIsts_0026(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode();
+        ListNode cur = result;
+        while (l1 != null && l2 != null) {
+            cur.next = l1;
+            l1 = l1.next;
+            cur = cur.next;
+            cur.next = l2;
+            l2 = l2.next;
+            cur = cur.next;
+        }
+        cur.next = l1 == null ? l2 : l1;
+        return result.next;
+    }
+
+    // 剑指 Offer II 027. 回文链表#3
+    @Test
+    void code0027() {
+        ListNode head = new ListNode().build(new int[]{1, 2, 3, 3, 2, 1});
+        boolean result = true;
+        if (head != null && head.next != null) {
+            ListNode slow = head, fast = head.next;
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            ListNode cur = slow.next;
+            slow.next = null;
+            ListNode pre = null;
+            while (cur != null) {
+                ListNode tmp = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = tmp;
+            }
+            while (pre != null) {
+                if (pre.val != head.val) {
+                    result = false;
+                    break;
+                }
+                pre = pre.next;
+                head = head.next;
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 028. 展平多级双向链表#3
+    @Test
+    void code0028() {
+        MultiNode C = new MultiNode().build(new int[]{11, 12});
+        MultiNode B2 = new MultiNode().build(new int[]{8, 9, 10});
+        B2.child = C;
+        MultiNode B1 = new MultiNode().build(new int[]{7});
+        B1.next = B2;
+        MultiNode A2 = new MultiNode().build(new int[]{3, 4, 5, 6});
+        A2.child = B1;
+        MultiNode A1 = new MultiNode().build(new int[]{1, 2});
+        A1.next.next = A2;
+
+        MultiNode head = A1;
+        MultiNode result = new MultiNode();
+        if (head != null) {
+            MultiNode tail = result;
+            preOrder_0028(head, tail);
+            result.next.prev = null;
+        }
+        log.info("result: {}", result.next);
+    }
+
+    private void preOrder_0028(MultiNode head, MultiNode tail) {
+        if (head == null) {
+            return;
+        }
+        MultiNode next = head.next;
+        MultiNode child = head.child;
+        tail.next = head;
+        head.prev = tail;
+        tail = tail.next;
+        head.child = null;
+        preOrder_0028(child, tail);
+        preOrder_0028(next, tail);
+    }
+
+    // 剑指 Offer II 029. 排序的循环链表#2
+    @Test
+    void code0029() {
 
     }
 
