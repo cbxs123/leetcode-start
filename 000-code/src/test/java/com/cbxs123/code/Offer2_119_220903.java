@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author cbxs123
@@ -703,6 +704,213 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 029. 排序的循环链表#2
     @Test
     void code0029() {
+        ListNode head = new ListNode().build(new int[]{3, 4, 1});
+        head.next.next.next = head;
+        int insert = 2;
+        ListNode node = new ListNode(2);
+        ListNode result;
+        if (head == null) {
+            node.next = node;
+            result = node;
+        } else {
+            ListNode cur = head;
+            for (; ; ) {
+                if (cur.val <= insert && insert <= cur.next.val ||
+                        cur.val > cur.next.val && (cur.val <= insert || insert <= cur.next.val) ||
+                        cur.next == head) {
+                    node.next = cur.next;
+                    cur.next = node;
+                    break;
+                }
+                cur = cur.next;
+            }
+            result = head;
+        }
+        //log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 030. 插入、删除和随机访问都是 O(1) 的容器#2
+    @Test
+    void code0030() {
+        RandomSet obj = new RandomSet();
+        log.info("result: {}", obj.insert(1));
+        log.info("result: {}", obj.insert(2));
+        log.info("result: {}", obj.insert(3));
+        log.info("result: {}", obj.insert(3));
+        log.info("result: {}", obj.getRandom());
+        log.info("result: {}", obj.remove(4));
+        log.info("result: {}", obj.remove(3));
+        log.info("result: {}", obj.getRandom());
+    }
+
+    class RandomSet {
+        private final Map<Integer, Integer> map;
+        private final List<Integer> list;
+
+        public RandomSet() {
+            this.map = new HashMap<>();
+            this.list = new ArrayList<>();
+        }
+
+        public boolean insert(int val) {
+            if (map.containsKey(val)) {
+                return false;
+            }
+            map.put(val, list.size());
+            list.add(val);
+            return true;
+        }
+
+        public boolean remove(int val) {
+            if (map.containsKey(val)) {
+                int idx = map.get(val);
+                int last = list.size() - 1;
+                Collections.swap(list, idx, last);
+                list.remove(last);
+                map.remove(val);
+                return true;
+            }
+            return false;
+        }
+
+        public int getRandom() {
+            return list.get(ThreadLocalRandom.current().nextInt(list.size()));
+        }
+    }
+
+    // 剑指 Offer II 031. 最近最少使用缓存#3
+    @Test
+    void code0031() {
+        LRUCache_0031_1 l1 = new LRUCache_0031_1(2);
+        l1.put(1, 1);
+        l1.put(2, 2);
+        log.info("result: {}", l1.get(1));
+        l1.put(3, 3);
+        log.info("result: {}", l1.get(2));
+        l1.put(4, 4);
+        log.info("result: {}", l1.get(1));
+        log.info("result: {}", l1.get(3));
+        log.info("result: {}", l1.get(4));
+
+        LRUCache_0031_2 l2 = new LRUCache_0031_2(2);
+        l2.put(1, 1);
+        l2.put(2, 2);
+        log.info("result: {}", l2.get(1));
+        l2.put(3, 3);
+        log.info("result: {}", l2.get(2));
+        l2.put(4, 4);
+        log.info("result: {}", l2.get(1));
+        log.info("result: {}", l2.get(3));
+        log.info("result: {}", l2.get(4));
+    }
+
+    class LRUCache_0031_1 {
+        class Node {
+            int key;
+            int value;
+            Node prev;
+            Node next;
+
+            Node() {
+            }
+
+            Node(int key, int value) {
+                this.key = key;
+                this.value = value;
+            }
+        }
+
+        private Map<Integer, Node> map;
+        private Node head;
+        private Node tail;
+        private int capacity;
+        private int size;
+
+        public LRUCache_0031_1(int capacity) {
+            map = new HashMap<>();
+            head = new Node();
+            tail = new Node();
+            head.next = tail;
+            tail.prev = head;
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            if (!map.containsKey(key)) {
+                return -1;
+            }
+            Node node = map.get(key);
+            moveToHead(node);
+            return node.value;
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                node.value = value;
+                moveToHead(node);
+            } else {
+                Node node = new Node(key, value);
+                map.put(key, node);
+                addToHead(node);
+                if (++size > capacity) {
+                    node = removeTail();
+                    map.remove(node.key);
+                    size--;
+                }
+            }
+        }
+
+        private void moveToHead(Node node) {
+            removeNode(node);
+            addToHead(node);
+        }
+
+        private void removeNode(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+
+        private void addToHead(Node node) {
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
+            node.prev = head;
+        }
+
+        private Node removeTail() {
+            Node node = tail.prev;
+            removeNode(node);
+            return node;
+        }
+    }
+
+    class LRUCache_0031_2 extends LinkedHashMap<Integer, Integer> {
+
+        private final int capacity;
+
+        public LRUCache_0031_2(int capacity) {
+            super(capacity, 0.75f, true);
+            this.capacity = capacity;
+        }
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+            return size() > capacity;
+        }
+
+        public int get(int key) {
+            return super.getOrDefault(key, -1);
+        }
+
+        public void put(int key, int value) {
+            super.put(key, value);
+        }
+    }
+
+    // 剑指 Offer II 032. 有效的变位词#2
+    @Test
+    void code0032() {
 
     }
 
