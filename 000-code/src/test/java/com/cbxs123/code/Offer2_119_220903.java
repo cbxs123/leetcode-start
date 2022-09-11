@@ -911,8 +911,47 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 032. 有效的变位词#2
     @Test
     void code0032() {
-
+        String s = "abc", t = "bca";
+        int len = s.length();
+        boolean result = true;
+        if (t.length() != len || Objects.equals(s, t)) {
+            result = false;
+        } else {
+            int[] chars = new int[26];
+            for (int i = 0; i < len; i++) {
+                chars[s.charAt(i) - 'a']++;
+                chars[t.charAt(i) - 'a']--;
+            }
+            for (int c : chars) {
+                if (c != 0) {
+                    result = false;
+                    break;
+                }
+            }
+        }
+        log.info("result: {}", result);
     }
 
+    // 剑指 Offer II 033. 变位词组#2
+    @Test
+    void code0033() {
+        String[] strs = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+        List<List<String>> result;
+        Map<String, List<String>> chars = new HashMap<>();
+        for (String s : strs) {
+            char[] t = s.toCharArray();
+            Arrays.sort(t);
+            String k = new String(t);
+            chars.computeIfAbsent(k, key -> new ArrayList<>()).add(s);
+        }
+        result = new ArrayList<>(chars.values());
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 034. 外星语言是否排序#3
+    @Test
+    void code0034() {
+
+    }
 
 }
