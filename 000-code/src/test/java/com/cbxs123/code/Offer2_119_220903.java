@@ -951,7 +951,130 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 034. 外星语言是否排序#3
     @Test
     void code0034() {
+        String[] words = new String[]{"word", "world", "row"};
+        String order = "worldabcefghijkmnpqstuvxyz";
+        boolean result = true;
+        int[] index = new int[26];
+        for (int i = 0; i < order.length(); i++) {
+            index[order.charAt(i) - 'a'] = i;
+        }
+        for (int i = 0; i < words.length - 1; i++) {
+            String w1 = words[i];
+            String w2 = words[i + 1];
+            int l1 = w1.length(), l2 = w2.length();
+            for (int j = 0; j < Math.max(l1, l2); j++) {
+                int i1 = j >= l1 ? -1 : index[w1.charAt(j) - 'a'];
+                int i2 = j >= l2 ? -1 : index[w2.charAt(j) - 'a'];
+                if (i1 > i2) {
+                    result = false;
+                    break;
+                }
+                if (i1 < i2) {
+                    break;
+                }
+            }
+            if (!result) {
+                break;
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 035. 最小时间差#2
+    @Test
+    void code0035() {
+        List<String> timePoints = Arrays.asList("23:59", "00:00", "00:02");
+        int result = 24 * 60;
+        if (timePoints.size() > 24 * 60) {
+            result = 0;
+        } else {
+            List<Integer> mins = new ArrayList<>();
+            for (String t : timePoints) {
+                String[] time = t.split(":");
+                mins.add(Integer.parseInt(time[0]) * 60 + Integer.parseInt(time[1]));
+            }
+            Collections.sort(mins);
+            mins.add(mins.get(0) + 24 * 60);
+            for (int i = 1; i < mins.size(); i++) {
+                result = Math.min(result, mins.get(i) - mins.get(i - 1));
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 036. 后缀表达式#2
+    @Test
+    void code0036() {
+        String[] tokens = {"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"};
+        Deque<Integer> q = new ArrayDeque<>();
+        for (String t : tokens) {
+            if (t.length() > 1 || Character.isDigit(t.charAt(0))) {
+                q.push(Integer.parseInt(t));
+            } else {
+                int y = q.pop();
+                int x = q.pop();
+                switch (t) {
+                    case "+":
+                        q.push(x + y);
+                        break;
+                    case "-":
+                        q.push(x - y);
+                        break;
+                    case "*":
+                        q.push(x * y);
+                        break;
+                    default:
+                        q.push(x / y);
+                        break;
+                }
+            }
+        }
+        log.info("result: {}", q.pop());
+    }
+
+    // 剑指 Offer II 037. 小行星碰撞#2
+    @Test
+    void code0037() {
+        int[] asteroids = {12, 2, -5, -11, -2};
+        Deque<Integer> d = new ArrayDeque<>();
+        for (int a : asteroids) {
+            if (a > 0) {
+                d.offerLast(a);
+            } else {
+                while (!d.isEmpty() && d.peekLast() > 0 && d.peekLast() <= -a) {
+                    d.pollLast();
+                }
+                if (d.isEmpty() || d.peekLast() < -a) {
+                    d.offerLast(a);
+                }
+            }
+        }
+        int[] result = d.stream().mapToInt(Integer::valueOf).toArray();
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 038. 每日温度#2
+    @Test
+    void code0038() {
+        int[] temperatures = {73, 74, 75, 71, 69, 72, 76, 73};
+        int n = temperatures.length;
+        int[] result = new int[n];
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            while (!q.isEmpty() && temperatures[q.peek()] < temperatures[i]) {
+                int j = q.pop();
+                result[j] = i - j;
+            }
+            q.push(i);
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 039. 直方图最大矩形面积#2
+    @Test
+    void code0039() {
 
     }
+
 
 }
