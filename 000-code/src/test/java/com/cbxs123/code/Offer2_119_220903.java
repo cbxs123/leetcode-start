@@ -1073,7 +1073,21 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 039. 直方图最大矩形面积#2
     @Test
     void code0039() {
-
+        int[] heights = {2, 1, 5, 6, 2, 3};
+        int o = heights.length, n = o + 2;
+        int[] copy = new int[n];
+        System.arraycopy(heights, 0, copy, 1, o);
+        int result = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && copy[stack.peek()] > copy[i]) {
+                int h = copy[stack.peek()];
+                stack.pop();
+                result = Math.max(result, h * (i - stack.peek() - 1));
+            }
+            stack.push(i);
+        }
+        log.info("result: {}", result);
     }
 
 
