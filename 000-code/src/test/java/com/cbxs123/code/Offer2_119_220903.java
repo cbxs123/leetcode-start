@@ -1091,4 +1091,130 @@ public class Offer2_119_220903 {
     }
 
 
+    // 剑指 Offer II 040. 矩阵中最大的矩形#3
+    @Test
+    void code0040() {
+        String[] matrix = {"10100", "10111", "11111", "10010"};
+        int result = 0;
+        if (matrix != null && matrix.length != 0) {
+            int n = matrix[0].length();
+            int[] heights = new int[n];
+            for (String row : matrix) {
+                for (int i = 0; i < n; i++) {
+                    if (row.charAt(i) == '1') {
+                        heights[i] += 1;
+                    } else {
+                        heights[i] = 0;
+                    }
+                }
+                result = Math.max(result, largest_0040(heights));
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    private int largest_0040(int[] heights) {
+        int res = 0, n = heights.length;
+        Deque<Integer> stk = new ArrayDeque<>();
+        int[] left = new int[n];
+        int[] right = new int[n];
+        Arrays.fill(right, n);
+        for (int i = 0; i < n; i++) {
+            while (!stk.isEmpty() && heights[stk.peek()] >= heights[i]) {
+                right[stk.pop()] = i;
+            }
+            left[i] = stk.isEmpty() ? -1 : stk.peek();
+            stk.push(i);
+        }
+        for (int i = 0; i < n; i++) {
+            res = Math.max(res, heights[i] * (right[i] - left[i] - 1));
+        }
+        return res;
+    }
+
+    // 剑指 Offer II 041. 滑动窗口的平均值#2
+    @Test
+    void code0041() {
+        MovingAverage_0041_1 movingAverage1 = new MovingAverage_0041_1(3);
+        log.info("result: {}", movingAverage1.next(1)); // 返回 1.0 = 1 / 1
+        log.info("result: {}", movingAverage1.next(10)); // 返回 5.5 = (1 + 10) / 2
+        log.info("result: {}", movingAverage1.next(3)); // 返回 4.66667 = (1 + 10 + 3) / 3
+        log.info("result: {}", movingAverage1.next(5)); // 返回 6.0 = (10 + 3 + 5) / 3
+
+        MovingAverage_0041_2 movingAverage2 = new MovingAverage_0041_2(3);
+        log.info("result: {}", movingAverage2.next(1)); // 返回 1.0 = 1 / 1
+        log.info("result: {}", movingAverage2.next(10)); // 返回 5.5 = (1 + 10) / 2
+        log.info("result: {}", movingAverage2.next(3)); // 返回 4.66667 = (1 + 10 + 3) / 3
+        log.info("result: {}", movingAverage2.next(5)); // 返回 6.0 = (10 + 3 + 5) / 3
+    }
+
+    class MovingAverage_0041_1 {
+        private int[] arr;
+        private int sum;
+        private int cnt;
+
+        public MovingAverage_0041_1(int size) {
+            arr = new int[size];
+        }
+
+        public double next(int val) {
+            int idx = cnt % arr.length;
+            sum += val - arr[idx];
+            arr[idx] = val;
+            cnt++;
+            return sum * 1.0 / Math.min(cnt, arr.length);
+        }
+    }
+
+    class MovingAverage_0041_2 {
+        private Deque<Integer> q = new ArrayDeque<>();
+        private int sum;
+        private int size;
+
+        public MovingAverage_0041_2(int size) {
+            this.size = size;
+        }
+
+        public double next(int val) {
+            if (q.size() == size) {
+                sum -= q.pollFirst();
+            }
+            sum += val;
+            q.offer(val);
+            return sum * 1.0 / q.size();
+        }
+    }
+
+    // 剑指 Offer II 042. 最近请求次数#1
+    @Test
+    void code0042() {
+        RecentCounter_0042 recentCounter = new RecentCounter_0042();
+        log.info("result: {}", recentCounter.ping(1));     // requests = [1]，范围是 [-2999,1]，返回 1
+        log.info("result: {}", recentCounter.ping(100));   // requests = [1, 100]，范围是 [-2900,100]，返回 2
+        log.info("result: {}", recentCounter.ping(3001));  // requests = [1, 100, 3001]，范围是 [1,3001]，返回 3
+        log.info("result: {}", recentCounter.ping(3002));  // requests = [1, 100, 3001, 3002]，范围是 [2,3002]，返回 3
+    }
+
+    class RecentCounter_0042 {
+        private Deque<Integer> q;
+
+        public RecentCounter_0042() {
+            q = new LinkedList<>();
+        }
+
+        public int ping(int t) {
+            q.offerLast(t);
+            while (q.peekFirst() < t - 3000) {
+                q.pollFirst();
+            }
+            return q.size();
+        }
+    }
+
+    // 剑指 Offer II 043. 往完全二叉树添加节点#3
+    @Test
+    void code0043() {
+
+    }
+
 }
