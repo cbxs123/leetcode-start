@@ -2,6 +2,7 @@ package com.cbxs123.code;
 
 import com.cbxs123.code.common.ListNode;
 import com.cbxs123.code.common.MultiNode;
+import com.cbxs123.code.common.TreeNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -1211,9 +1212,82 @@ public class Offer2_119_220903 {
         }
     }
 
-    // 剑指 Offer II 043. 往完全二叉树添加节点#3
+    // 剑指 Offer II 043. 往完全二叉树添加节点#2
     @Test
     void code0043() {
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        CBTInsert_0043 obj = new CBTInsert_0043(root);
+        obj.insert(8);
+        TreeNode result = obj.getRoot();
+        log.info("result: {}", result);
+    }
+
+    class CBTInsert_0043 {
+        private List<TreeNode> tree;
+
+        public CBTInsert_0043(TreeNode root) {
+            tree = new ArrayList<>();
+            Deque<TreeNode> q = new ArrayDeque<>();
+            q.offer(root);
+            while (!q.isEmpty()) {
+                TreeNode node = q.pollFirst();
+                tree.add(node);
+                if (node.left != null) {
+                    q.offer(node.left);
+                }
+                if (node.right != null) {
+                    q.offer(node.right);
+                }
+            }
+        }
+
+        public int insert(int v) {
+            int pid = (tree.size() - 1) >> 1;
+            TreeNode node = new TreeNode(v);
+            tree.add(node);
+            TreeNode p = tree.get(pid);
+            if (p.left == null) {
+                p.left = node;
+            } else {
+                p.right = node;
+            }
+            return p.val;
+        }
+
+        public TreeNode getRoot() {
+            return tree.get(0);
+        }
+    }
+
+    // 剑指 Offer II 044. 二叉树每层的最大值#1
+    @Test
+    void code0044() {
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        List<Integer> result = new ArrayList<>();
+        if (root != null) {
+            Deque<TreeNode> q = new ArrayDeque<>();
+            q.offer(root);
+            while (!q.isEmpty()) {
+                int t = Integer.MIN_VALUE;
+                for (int i = q.size(); i > 0; i--) {
+                    TreeNode node = q.poll();
+                    t = Math.max(t, node.val);
+                    if (node.left != null) {
+                        q.offer(node.left);
+                    }
+                    if (node.right != null) {
+                        q.offer(node.right);
+                    }
+                }
+                result.add(t);
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 045. 二叉树最底层最左边的值#1
+    @Test
+    void code0045() {
 
     }
 
