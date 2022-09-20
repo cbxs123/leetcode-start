@@ -1288,7 +1288,32 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 045. 二叉树最底层最左边的值#1
     @Test
     void code0045() {
-
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, null, 5, 6, null, 7, 8, null});
+        int result = -1;
+        Queue<TreeNode> q = new ArrayDeque<>();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            int n = q.size();
+            for (int i = 0; i < n; i++) {
+                TreeNode node = q.poll();
+                if (i == 0) {
+                    result = node.val;
+                }
+                if (node.left != null) {
+                    q.offer(node.left);
+                }
+                if (node.right != null) {
+                    q.offer(node.right);
+                }
+            }
+        }
+        log.info("result: {}", result);
     }
 
+    // 剑指 Offer II 046. 二叉树的右侧视图#1
+    @Test
+    void code0046() {
+
+    }
+    
 }
