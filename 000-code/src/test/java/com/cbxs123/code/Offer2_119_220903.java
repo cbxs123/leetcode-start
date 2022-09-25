@@ -1313,7 +1313,51 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 046. 二叉树的右侧视图#1
     @Test
     void code0046() {
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, null, 5, 6, null, 7, null, null});
+        List<Integer> result = new ArrayList<>();
+        if (root != null) {
+            Deque<TreeNode> q = new ArrayDeque<>();
+            q.offer(root);
+            while (!q.isEmpty()) {
+                result.add(q.peekFirst().val);
+                for (int i = q.size(); i > 0; i--) {
+                    TreeNode node = q.poll();
+                    if (node.right != null) {
+                        q.offer(node.right);
+                    }
+                    if (node.left != null) {
+                        q.offer(node.left);
+                    }
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 047. 二叉树剪枝#1
+    @Test
+    void code0047() {
+        TreeNode root = new TreeNode().build(new Integer[]{1, 0, 1, 0, 0, 0, 1});
+        TreeNode result = pruneTree_0047(root);
+        log.info("result: {}", result);
+    }
+
+    private TreeNode pruneTree_0047(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        root.left = pruneTree_0047(root.left);
+        root.right = pruneTree_0047(root.right);
+        if (root.val == 0 && root.left == null && root.right == null) {
+            return null;
+        }
+        return root;
+    }
+
+    // 剑指 Offer II 048. 序列化与反序列化二叉树#3
+    @Test
+    void code0048() {
 
     }
-    
+
 }
