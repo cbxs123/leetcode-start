@@ -1357,6 +1357,80 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 048. 序列化与反序列化二叉树#3
     @Test
     void code0048() {
+        Codec_0048 ser = new Codec_0048();
+        Codec_0048 deser = new Codec_0048();
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode result = deser.deserialize(ser.serialize(root));
+        log.info("result: {}", result);
+    }
+
+    class Codec_0048 {
+        private static final String NULL = "#";
+        private static final String SEP = ",";
+
+        public String serialize(TreeNode root) {
+            if (root == null) {
+                return "";
+            }
+            StringBuilder sb = new StringBuilder();
+            preOrder(root, sb);
+            return sb.toString();
+        }
+
+        private void preOrder(TreeNode root, StringBuilder sb) {
+            if (root == null) {
+                sb.append(NULL + SEP);
+                return;
+            }
+            sb.append(root.val + SEP);
+            preOrder(root.left, sb);
+            preOrder(root.right, sb);
+        }
+
+        public TreeNode deserialize(String data) {
+            if (data == null || "".equals(data)) {
+                return null;
+            }
+            List<String> list = new LinkedList<>();
+            for (String s : data.split(SEP)) {
+                list.add(s);
+            }
+            return deserialize(list);
+        }
+
+        private TreeNode deserialize(List<String> list) {
+            String first = list.remove(0);
+            if (NULL.equals(first)) {
+                return null;
+            }
+            TreeNode root = new TreeNode(Integer.parseInt(first));
+            root.left = deserialize(list);
+            root.right = deserialize(list);
+            return root;
+        }
+    }
+
+    // 剑指 Offer II 049. 从根节点到叶节点的路径数字之和#2
+    @Test
+    void code0049() {
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        log.info("result: {}", dfs_0049(root, 0));
+    }
+
+    private int dfs_0049(TreeNode root, int preSum) {
+        if (root == null) {
+            return 0;
+        }
+        int s = preSum * 10 + root.val;
+        if (root.left == null || root.right == null) {
+            return s;
+        }
+        return dfs_0049(root.left, s) + dfs_0049(root.right, s);
+    }
+
+    // 剑指 Offer II 050. 向下的路径节点之和#3
+    @Test
+    void code0050() {
 
     }
 
