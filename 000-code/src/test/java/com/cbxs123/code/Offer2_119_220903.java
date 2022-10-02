@@ -1475,7 +1475,127 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 052. 展平二叉搜索树#3
     @Test
     void code0052() {
-
+        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode head = null, tail = null, cur = root;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        while (!stack.isEmpty() || cur != null) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            cur = stack.pop();
+            if (head == null) {
+                head = cur;
+            } else {
+                tail.right = cur;
+            }
+            tail = cur;
+            cur.left = null;
+            cur = cur.right;
+        }
+        log.info("result: {}", head);
     }
 
+    // 剑指 Offer II 053. 二叉搜索树中的中序后继#2
+    @Test
+    void code0053() {
+        TreeNode root = new TreeNode().build(new Integer[]{2, 1, 3});
+        TreeNode cur = root, result = null, p = new TreeNode(2);
+        while (cur != null) {
+            if (cur.val <= p.val) {
+                cur = cur.right;
+            } else {
+                result = cur;
+                cur = cur.left;
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 054. 所有大于等于节点的值之和#2
+    @Test
+    void code0054() {
+        TreeNode root = new TreeNode().build(new Integer[]{3, 2, 4, 1});
+        AtomicInteger sum = new AtomicInteger(0);
+        dfs_0054(root, sum);
+        log.info("result: {}", root);
+    }
+
+    private void dfs_0054(TreeNode root, AtomicInteger sum) {
+        if (root == null) {
+            return;
+        }
+        dfs_0054(root.right, sum);
+        sum.addAndGet(root.val);
+        root.val = sum.get();
+        dfs_0054(root.left, sum);
+    }
+
+    // 剑指 Offer II 055. 二叉搜索树迭代器#2
+    @Test
+    void code0055() {
+        TreeNode root = new TreeNode().build(new Integer[]{7, 3, 15, null, null, 9, 20});
+        BSTIterator_0055 bSTIterator = new BSTIterator_0055(root);
+        log.info("{}", bSTIterator.next());     // 返回 3
+        log.info("{}", bSTIterator.next());     // 返回 7
+        log.info("{}", bSTIterator.hasNext());  // 返回 True
+        log.info("{}", bSTIterator.next());     // 返回 9
+        log.info("{}", bSTIterator.hasNext());  // 返回 True
+        log.info("{}", bSTIterator.next());     // 返回 15
+        log.info("{}", bSTIterator.hasNext());  // 返回 True
+        log.info("{}", bSTIterator.next());     // 返回 20
+        log.info("{}", bSTIterator.hasNext());  // 返回 False
+    }
+
+    class BSTIterator_0055 {
+        private int cur = 0;
+        private List<Integer> vals = new ArrayList<>();
+
+        public BSTIterator_0055(TreeNode root) {
+            inOrder(root);
+        }
+
+        public int next() {
+            return vals.get(cur++);
+        }
+
+        public boolean hasNext() {
+            return cur < vals.size();
+        }
+
+        private void inOrder(TreeNode root) {
+            if (root != null) {
+                inOrder(root.left);
+                vals.add(root.val);
+                inOrder(root.right);
+            }
+        }
+    }
+
+    // 剑指 Offer II 056. 二叉搜索树中两个节点之和#2
+    @Test
+    void code0056() {
+        Set<Integer> set = new HashSet<>();
+        TreeNode root = new TreeNode().build(new Integer[]{8, 6, 10, 5, 7, 9, 11});
+        int k = 12;
+        log.info("result: {}", find_0056(root, k, set));
+    }
+
+    private boolean find_0056(TreeNode root, int k, Set<Integer> set) {
+        if (root == null) {
+            return false;
+        }
+        if (set.contains(k - root.val)) {
+            return true;
+        }
+        set.add(root.val);
+        return find_0056(root.left, k, set) || find_0056(root.right, k, set);
+    }
+
+    // 剑指 Offer II 057. 值和下标之差都在给定的范围内
+    @Test
+    void code0057() {
+
+
+    }
 }
