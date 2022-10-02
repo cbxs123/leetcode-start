@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author cbxs123
@@ -1431,6 +1432,49 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 050. 向下的路径节点之和#3
     @Test
     void code0050() {
+        TreeNode root = new TreeNode().build(new Integer[]{10, 5, -3, 3, 2, null, 11, 3, -2, null, 1});
+        int targetSum = 8;
+        Map<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0, 1);
+        log.info("result: {}", dfs_0050(root, 0, targetSum, preSum));
+    }
+
+    private int dfs_0050(TreeNode node, int cur, int targetSum, Map<Integer, Integer> preSum) {
+        if (node == null) {
+            return 0;
+        }
+        cur += node.val;
+        int res = preSum.getOrDefault(cur - targetSum, 0);
+
+        preSum.merge(cur, 1, Integer::sum);
+        res += dfs_0050(node.left, cur, targetSum, preSum);
+        res += dfs_0050(node.right, cur, targetSum, preSum);
+        preSum.merge(cur, -1, Integer::sum);
+        return res;
+    }
+
+    // 剑指 Offer II 051. 节点之和最大的路径#2
+    @Test
+    void code0051() {
+        TreeNode root = new TreeNode().build(new Integer[]{-10, 9, 20, null, null, 15, 7});
+        AtomicInteger result = new AtomicInteger(0);
+        dfs_0051(root, result);
+        log.info("result: {}", result.get());
+    }
+
+    private int dfs_0051(TreeNode node, AtomicInteger result) {
+        if (node == null) {
+            return 0;
+        }
+        int left = Math.max(0, dfs_0051(node.left, result));
+        int right = Math.max(0, dfs_0051(node.right, result));
+        result.set(Math.max(result.get(), node.val + left + right));
+        return node.val + Math.max(left, right);
+    }
+
+    // 剑指 Offer II 052. 展平二叉搜索树#3
+    @Test
+    void code0052() {
 
     }
 
