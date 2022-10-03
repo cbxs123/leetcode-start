@@ -1592,10 +1592,31 @@ public class Offer2_119_220903 {
         return find_0056(root.left, k, set) || find_0056(root.right, k, set);
     }
 
-    // 剑指 Offer II 057. 值和下标之差都在给定的范围内
+    // 剑指 Offer II 057. 值和下标之差都在给定的范围内#2
     @Test
     void code0057() {
+        int[] nums = {1, 5, 8, 1, 5, 9};
+        int t = 3, k = 2;
+        TreeSet<Integer> set = new TreeSet<>();
+        boolean result = false;
+        for (int i = 0; i < nums.length; i++) {
+            Integer x = set.ceiling(nums[i] - t);
+            if (x != null && x <= nums[i] + t) {
+                result = true;
+                break;
+            }
+            set.add(nums[i]);
+            if (i >= k) {
+                set.remove(nums[i - k]);
+            }
+        }
+        log.info("result: {}", result);
+    }
 
+    // 剑指 Offer II 058. 日程表#1
+    @Test
+    void code0058() {
 
     }
+
 }
