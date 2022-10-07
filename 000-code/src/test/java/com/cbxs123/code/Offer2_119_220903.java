@@ -1616,6 +1616,90 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 058. 日程表#1
     @Test
     void code0058() {
+        Calendar_0058 myCalendar = new Calendar_0058();
+        log.info("{}", myCalendar.book(10, 20)); // returns true
+        log.info("{}", myCalendar.book(15, 25)); // returns false
+        log.info("{}", myCalendar.book(20, 30)); // returns true
+    }
+
+    class Calendar_0058 {
+
+        private final TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        public Calendar_0058() {
+        }
+
+        public boolean book(int start, int end) {
+            Map.Entry<Integer, Integer> ent = map.floorEntry(start);
+            if (ent != null && ent.getValue() > start) {
+                return false;
+            }
+            ent = map.ceilingEntry(start);
+            if (ent != null && ent.getKey() < end) {
+                return false;
+            }
+            map.put(start, end);
+            return true;
+        }
+    }
+
+    // 剑指 Offer II 059. 数据流的第 K 大数值#1
+    @Test
+    void code0059() {
+        KthLargest_0059 kthLargest = new KthLargest_0059(3, new int[]{4, 5, 8, 2});
+        log.info("{}", kthLargest.add(3));   // return 4
+        log.info("{}", kthLargest.add(5));   // return 5
+        log.info("{}", kthLargest.add(10));  // return 5
+        log.info("{}", kthLargest.add(9));   // return 8
+        log.info("{}", kthLargest.add(4));   // return 8
+    }
+
+    class KthLargest_0059 {
+        private PriorityQueue<Integer> q;
+        private int size;
+
+        public KthLargest_0059(int size, int[] nums) {
+            q = new PriorityQueue<>(size);
+            this.size = size;
+            for (int num : nums) {
+                add(num);
+            }
+        }
+
+        public int add(int val) {
+            q.offer(val);
+            if (q.size() > size) {
+                q.poll();
+            }
+            return q.peek();
+        }
+    }
+
+    // 剑指 Offer II 060. 出现频率最高的 k 个数字#2
+    @Test
+    void code0060() {
+        int[] nums = new int[]{1, 1, 1, 2, 2, 3};
+        int k = 2;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.merge(num, 1, Integer::sum);
+        }
+        PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparing(x -> x[1]));
+        map.forEach((num, freq) -> {
+            if (q.size() == k) {
+                q.offer(new int[]{num, freq});
+                q.poll();
+            } else {
+                q.offer(new int[]{num, freq});
+            }
+        });
+        int[] result = q.stream().mapToInt(x -> x[0]).toArray();
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 061. 和最小的 k 个数对#1
+    @Test
+    void code0061() {
 
     }
 
