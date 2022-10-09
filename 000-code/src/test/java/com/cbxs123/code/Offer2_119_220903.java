@@ -1700,6 +1700,150 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 061. 和最小的 k 个数对#1
     @Test
     void code0061() {
+        int[] nums1 = new int[]{1, 7, 11}, nums2 = new int[]{2, 4, 6};
+        int k = 3;
+        Queue<List<Integer>> q = new PriorityQueue<>((x, y) -> (y.get(0) + y.get(1)) - (x.get(0) + x.get(1)));
+        for (int i = 0; i < nums1.length && i < k; i++) {
+            for (int j = 0; j < nums2.length && j < k; j++) {
+                q.offer(Arrays.asList(nums1[i], nums2[j]));
+                if (q.size() > k) {
+                    q.poll();
+                }
+            }
+        }
+        log.info("result: {}", new ArrayList<>(q));
+    }
+
+    // 剑指 Offer II 062. 实现前缀树#3
+    @Test
+    void code0062() {
+        Trie_0062 trie = new Trie_0062();
+        trie.insert("apple");
+        log.info("{}", trie.search("apple"));   // 返回 True
+        log.info("{}", trie.search("app"));     // 返回 False
+        log.info("{}", trie.startsWith("app"));       // 返回 True
+        trie.insert("app");
+        log.info("{}", trie.search("app"));     // 返回 True
+    }
+
+    class Trie_0062 {
+        private Trie_0062[] children;
+        private boolean end;
+
+        public Trie_0062() {
+            this.children = new Trie_0062[26];
+            this.end = false;
+        }
+
+        public void insert(String word) {
+            Trie_0062 node = this;
+            for (char c : word.toCharArray()) {
+                int idx = c - 'a';
+                if (node.children[idx] == null) {
+                    node.children[idx] = new Trie_0062();
+                }
+                node = node.children[idx];
+            }
+            node.end = true;
+        }
+
+        private boolean search(String word) {
+            Trie_0062 node = searchPrefix(word);
+            return node != null && node.end;
+        }
+
+        private boolean startsWith(String prefix) {
+            Trie_0062 node = searchPrefix(prefix);
+            return node != null;
+        }
+
+        private Trie_0062 searchPrefix(String s) {
+            Trie_0062 node = this;
+            for (char c : s.toCharArray()) {
+                int idx = c - 'a';
+                if (node.children[idx] == null) {
+                    return null;
+                }
+                node = node.children[idx];
+            }
+            return node;
+        }
+    }
+
+    // 剑指 Offer II 063. 替换单词#2
+    @Test
+    void code0063() {
+        Set<String> set = new HashSet<>(Arrays.asList("catt", "cat", "bat", "rat"));
+        String sentence = "the cattle was rattled by the battery";
+        String[] words = sentence.split(" ");
+        for (int i = 0; i < words.length; i++) {
+            String w = words[i];
+            for (int j = 1; j <= w.length(); j++) {
+                String t = w.substring(0, j);
+                if (set.contains(t)) {
+                    words[i] = t;
+                    break;
+                }
+            }
+        }
+        log.info("result: {}", String.join(" ", words));
+    }
+
+    // 剑指 Offer II 064. 神奇的字典#3
+    @Test
+    void code0064() {
+        MagicDictionary_0064 magicDictionary = new MagicDictionary_0064();
+        magicDictionary.buildDict(new String[]{"hello", "leetcode"});
+        log.info("{}", magicDictionary.search("hello"));       // 返回 False
+        log.info("{}", magicDictionary.search("hhllo"));       // 将第二个 'h' 替换为 'e' 可以匹配 "hello" ，所以返回 True
+        log.info("{}", magicDictionary.search("hell"));        // 返回 False
+        log.info("{}", magicDictionary.search("leetcoded"));   // 返回 False
+    }
+
+    class MagicDictionary_0064 {
+        private Set<String> words;
+        private Map<String, Integer> cnt;
+
+        public MagicDictionary_0064() {
+            words = new HashSet<>();
+            cnt = new HashMap<>();
+        }
+
+        public void buildDict(String[] dictionary) {
+            for (String word : dictionary) {
+                words.add(word);
+                for (String p : patterns(word)) {
+                    cnt.merge(p, 1, Integer::sum);
+                }
+            }
+        }
+
+        public boolean search(String searchWord) {
+            for (String p : patterns(searchWord)) {
+                int c = cnt.getOrDefault(p, 0);
+                if (c > 1 || (c == 1 && !words.contains(searchWord))) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private List<String> patterns(String word) {
+            List<String> list = new ArrayList<>();
+            char[] chars = word.toCharArray();
+            for (int i = 0; i < chars.length; i++) {
+                char t = chars[i];
+                chars[i] = '*';
+                list.add(new String(chars));
+                chars[i] = t;
+            }
+            return list;
+        }
+    }
+
+    // 剑指 Offer II 065. 最短的单词编码#3
+    @Test
+    void code0065() {
 
     }
 
