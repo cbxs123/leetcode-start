@@ -1,14 +1,16 @@
 package com.cbxs123.code;
 
-import com.cbxs123.code.common.ListNode;
-import com.cbxs123.code.common.MultiNode;
-import com.cbxs123.code.common.TreeNode;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.junit.jupiter.api.Test;
+
+import com.cbxs123.code.common.ListNode;
+import com.cbxs123.code.common.MultiNode;
+import com.cbxs123.code.common.TreeNode;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author cbxs123
@@ -77,7 +79,7 @@ public class Offer2_119_220903 {
                 }
                 y--;
             }
-            sb.append((char) ((cnt & 1) + '0'));
+            sb.append((char)((cnt & 1) + '0'));
             cnt >>= 1;
         }
         if (cnt == 1) {
@@ -101,7 +103,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 004. 只出现一次的数字#1
     @Test
     void code0004() {
-        int[] nums = new int[]{2, 2, 2, 5, 4, 4, 4};
+        int[] nums = new int[] {2, 2, 2, 5, 4, 4, 4};
         int result = 0;
         for (int i = 0; i < 32; i++) {
             int cnt = 0;
@@ -117,7 +119,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 005. 单词长度的最大乘积#2
     @Test
     void code0005() {
-        String[] words = new String[]{"abcd", "abcde", "bar", "efgh", "efghd"};
+        String[] words = new String[] {"abcd", "abcde", "bar", "efgh", "efghd"};
         int n = words.length;
         int[] mark = new int[n];
         for (int i = 0; i < n; i++) {
@@ -139,17 +141,17 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 006. 排序数组中两个数字之和#1
     @Test
     void code0006() {
-        int[] nums = new int[]{1, 2, 4, 6, 8};
+        int[] nums = new int[] {1, 2, 4, 6, 8};
         int target = 8;
         int i = 0, j = nums.length - 1;
         int[] result;
-        for (; ; ) {
+        for (;;) {
             if (nums[i] + nums[j] < target) {
                 i++;
             } else if (nums[i] + nums[j] > target) {
                 j--;
             } else {
-                result = new int[]{i, j};
+                result = new int[] {i, j};
                 break;
             }
         }
@@ -159,7 +161,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 007. 数组中和为 0 的三个数#3
     @Test
     void code0007() {
-        int[] nums = new int[]{-1, 0, 1, 2, -1, -4};
+        int[] nums = new int[] {-1, 0, 1, 2, -1, -4};
         int n = nums.length;
         Arrays.sort(nums);
         List<List<Integer>> result = new ArrayList<>();
@@ -193,7 +195,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 008. 和大于等于 target 的最短子数组#2
     @Test
     void code0008() {
-        int[] nums = new int[]{2, 3, 1, 2, 4, 3};
+        int[] nums = new int[] {2, 3, 1, 2, 4, 3};
         int target = 7;
         int n = nums.length, result = Integer.MAX_VALUE, sum = 0;
         int left = 0, right = 0;
@@ -211,7 +213,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 009. 乘积小于 K 的子数组#2
     @Test
     void code0009() {
-        int[] nums = new int[]{10, 5, 2, 6};
+        int[] nums = new int[] {10, 5, 2, 6};
         int target = 100, n = nums.length;
         int result = 0;
         int sum = 1, left = 0, right = 0;
@@ -228,7 +230,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 010. 和为 k 的子数组#3
     @Test
     void code0010() {
-        int[] nums = new int[]{1, 2, 1, 2, 1, 2};
+        int[] nums = new int[] {1, 2, 1, 2, 1, 2};
         int target = 3;
         Map<Integer, Integer> map = new HashMap<>();
         int result = 0, sum = 0;
@@ -244,7 +246,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 011. 0 和 1 个数相同的子数组#3
     @Test
     void code0011() {
-        int[] nums = new int[]{0, 1, 0, 1, 1, 0, 0, 1};
+        int[] nums = new int[] {0, 1, 0, 1, 1, 0, 0, 1};
         int result = 0, sum = 0;
         Map<Integer, Integer> map = new HashMap<>();
         map.put(0, -1);
@@ -262,7 +264,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 012. 左右两边子数组的和相等#2
     @Test
     void code0012() {
-        int[] nums = new int[]{1, 2, 5, 1, 1, 1};
+        int[] nums = new int[] {1, 2, 5, 1, 1, 1};
         int result = -1, n = nums.length;
         int[] sum = new int[n + 1];
         for (int i = 1; i <= n; i++) {
@@ -279,8 +281,8 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 013. 二维子矩阵的和
     @Test
     void code0013() {
-        NumMatrix_0013 numMatrix = new NumMatrix_0013(new int[][]{{3, 0, 1, 4, 2}, {5, 6, 3, 2, 1}, {1, 2, 0, 1, 5}, {4, 1, 0, 1, 7},
-                {1, 0, 3, 0, 5}});
+        NumMatrix_0013 numMatrix = new NumMatrix_0013(
+            new int[][] {{3, 0, 1, 4, 2}, {5, 6, 3, 2, 1}, {1, 2, 0, 1, 5}, {4, 1, 0, 1, 7}, {1, 0, 3, 0, 5}});
         log.info("result: {}", numMatrix.sumRegion(2, 1, 4, 3));
         log.info("result: {}", numMatrix.sumRegion(1, 1, 2, 2));
         log.info("result: {}", numMatrix.sumRegion(1, 2, 2, 4));
@@ -496,7 +498,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 021. 删除链表的倒数第 n 个结点#1
     @Test
     void code0021() {
-        ListNode head = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        ListNode head = new ListNode().build(new int[] {1, 2, 3, 4, 5});
         int n = 2;
         ListNode dumy = new ListNode(0, head);
         ListNode fast = dumy, slow = dumy;
@@ -514,7 +516,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 022. 链表中环的入口节点#2
     @Test
     void code0022() {
-        ListNode head = new ListNode().build(new int[]{3, 2, 0, -4});
+        ListNode head = new ListNode().build(new int[] {3, 2, 0, -4});
         ListNode slow = head, fast = head;
         ListNode result = null;
         boolean flag = false;
@@ -537,8 +539,8 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 023. 两个链表的第一个重合节点#1
     @Test
     void code0023() {
-        ListNode headA = new ListNode().build(new int[]{1, 2, 3, 4, 5});
-        ListNode headB = new ListNode().build(new int[]{6, 7, 3, 4, 5});
+        ListNode headA = new ListNode().build(new int[] {1, 2, 3, 4, 5});
+        ListNode headB = new ListNode().build(new int[] {6, 7, 3, 4, 5});
         ListNode cur1 = headA, cur2 = headB;
         while (cur1.val != cur2.val) {
             cur1 = cur1 == null ? headB : cur1.next;
@@ -550,7 +552,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 024. 反转链表#1
     @Test
     void code0024() {
-        ListNode head = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        ListNode head = new ListNode().build(new int[] {1, 2, 3, 4, 5});
         ListNode pre = null, p = head;
         while (p != null) {
             ListNode q = p.next;
@@ -564,8 +566,8 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 025. 链表中的两数相加#2
     @Test
     void code0025() {
-        ListNode l1 = new ListNode().build(new int[]{7, 2, 4, 3});
-        ListNode l2 = new ListNode().build(new int[]{5, 6, 4});
+        ListNode l1 = new ListNode().build(new int[] {7, 2, 4, 3});
+        ListNode l2 = new ListNode().build(new int[] {5, 6, 4});
         Deque<Integer> s1 = new ArrayDeque<>();
         Deque<Integer> s2 = new ArrayDeque<>();
         while (l1 != null) {
@@ -590,7 +592,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 026. 重排链表#3
     @Test
     void code0026() {
-        ListNode head = new ListNode().build(new int[]{1, 2, 3, 4, 5});
+        ListNode head = new ListNode().build(new int[] {1, 2, 3, 4, 5});
         ListNode mid = middleNode_0026(head);
         ListNode tmp = mid.next;
         mid.next = null;
@@ -637,7 +639,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 027. 回文链表#3
     @Test
     void code0027() {
-        ListNode head = new ListNode().build(new int[]{1, 2, 3, 3, 2, 1});
+        ListNode head = new ListNode().build(new int[] {1, 2, 3, 3, 2, 1});
         boolean result = true;
         if (head != null && head.next != null) {
             ListNode slow = head, fast = head.next;
@@ -669,14 +671,14 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 028. 展平多级双向链表#3
     @Test
     void code0028() {
-        MultiNode C = new MultiNode().build(new int[]{11, 12});
-        MultiNode B2 = new MultiNode().build(new int[]{8, 9, 10});
+        MultiNode C = new MultiNode().build(new int[] {11, 12});
+        MultiNode B2 = new MultiNode().build(new int[] {8, 9, 10});
         B2.child = C;
-        MultiNode B1 = new MultiNode().build(new int[]{7});
+        MultiNode B1 = new MultiNode().build(new int[] {7});
         B1.next = B2;
-        MultiNode A2 = new MultiNode().build(new int[]{3, 4, 5, 6});
+        MultiNode A2 = new MultiNode().build(new int[] {3, 4, 5, 6});
         A2.child = B1;
-        MultiNode A1 = new MultiNode().build(new int[]{1, 2});
+        MultiNode A1 = new MultiNode().build(new int[] {1, 2});
         A1.next.next = A2;
 
         MultiNode head = A1;
@@ -706,7 +708,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 029. 排序的循环链表#2
     @Test
     void code0029() {
-        ListNode head = new ListNode().build(new int[]{3, 4, 1});
+        ListNode head = new ListNode().build(new int[] {3, 4, 1});
         head.next.next.next = head;
         int insert = 2;
         ListNode node = new ListNode(2);
@@ -716,10 +718,9 @@ public class Offer2_119_220903 {
             result = node;
         } else {
             ListNode cur = head;
-            for (; ; ) {
-                if (cur.val <= insert && insert <= cur.next.val ||
-                        cur.val > cur.next.val && (cur.val <= insert || insert <= cur.next.val) ||
-                        cur.next == head) {
+            for (;;) {
+                if (cur.val <= insert && insert <= cur.next.val
+                    || cur.val > cur.next.val && (cur.val <= insert || insert <= cur.next.val) || cur.next == head) {
                     node.next = cur.next;
                     cur.next = node;
                     break;
@@ -728,7 +729,7 @@ public class Offer2_119_220903 {
             }
             result = head;
         }
-        //log.info("result: {}", result);
+        // log.info("result: {}", result);
     }
 
     // 剑指 Offer II 030. 插入、删除和随机访问都是 O(1) 的容器#2
@@ -813,8 +814,7 @@ public class Offer2_119_220903 {
             Node prev;
             Node next;
 
-            Node() {
-            }
+            Node() {}
 
             Node(int key, int value) {
                 this.key = key;
@@ -937,7 +937,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 033. 变位词组#2
     @Test
     void code0033() {
-        String[] strs = new String[]{"eat", "tea", "tan", "ate", "nat", "bat"};
+        String[] strs = new String[] {"eat", "tea", "tan", "ate", "nat", "bat"};
         List<List<String>> result;
         Map<String, List<String>> chars = new HashMap<>();
         for (String s : strs) {
@@ -953,7 +953,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 034. 外星语言是否排序#3
     @Test
     void code0034() {
-        String[] words = new String[]{"word", "world", "row"};
+        String[] words = new String[] {"word", "world", "row"};
         String order = "worldabcefghijkmnpqstuvxyz";
         boolean result = true;
         int[] index = new int[26];
@@ -1092,7 +1092,6 @@ public class Offer2_119_220903 {
         log.info("result: {}", result);
     }
 
-
     // 剑指 Offer II 040. 矩阵中最大的矩形#3
     @Test
     void code0040() {
@@ -1191,10 +1190,10 @@ public class Offer2_119_220903 {
     @Test
     void code0042() {
         RecentCounter_0042 recentCounter = new RecentCounter_0042();
-        log.info("result: {}", recentCounter.ping(1));     // requests = [1]，范围是 [-2999,1]，返回 1
-        log.info("result: {}", recentCounter.ping(100));   // requests = [1, 100]，范围是 [-2900,100]，返回 2
-        log.info("result: {}", recentCounter.ping(3001));  // requests = [1, 100, 3001]，范围是 [1,3001]，返回 3
-        log.info("result: {}", recentCounter.ping(3002));  // requests = [1, 100, 3001, 3002]，范围是 [2,3002]，返回 3
+        log.info("result: {}", recentCounter.ping(1)); // requests = [1]，范围是 [-2999,1]，返回 1
+        log.info("result: {}", recentCounter.ping(100)); // requests = [1, 100]，范围是 [-2900,100]，返回 2
+        log.info("result: {}", recentCounter.ping(3001)); // requests = [1, 100, 3001]，范围是 [1,3001]，返回 3
+        log.info("result: {}", recentCounter.ping(3002)); // requests = [1, 100, 3001, 3002]，范围是 [2,3002]，返回 3
     }
 
     class RecentCounter_0042 {
@@ -1216,7 +1215,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 043. 往完全二叉树添加节点#2
     @Test
     void code0043() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, 5, 6, 7});
         CBTInsert_0043 obj = new CBTInsert_0043(root);
         obj.insert(8);
         TreeNode result = obj.getRoot();
@@ -1263,7 +1262,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 044. 二叉树每层的最大值#1
     @Test
     void code0044() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, 5, 6, 7});
         List<Integer> result = new ArrayList<>();
         if (root != null) {
             Deque<TreeNode> q = new ArrayDeque<>();
@@ -1289,7 +1288,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 045. 二叉树最底层最左边的值#1
     @Test
     void code0045() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, null, 5, 6, null, 7, 8, null});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, null, 5, 6, null, 7, 8, null});
         int result = -1;
         Queue<TreeNode> q = new ArrayDeque<>();
         q.offer(root);
@@ -1314,7 +1313,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 046. 二叉树的右侧视图#1
     @Test
     void code0046() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, null, 5, 6, null, 7, null, null});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, null, 5, 6, null, 7, null, null});
         List<Integer> result = new ArrayList<>();
         if (root != null) {
             Deque<TreeNode> q = new ArrayDeque<>();
@@ -1338,7 +1337,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 047. 二叉树剪枝#1
     @Test
     void code0047() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 0, 1, 0, 0, 0, 1});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 0, 1, 0, 0, 0, 1});
         TreeNode result = pruneTree_0047(root);
         log.info("result: {}", result);
     }
@@ -1360,7 +1359,7 @@ public class Offer2_119_220903 {
     void code0048() {
         Codec_0048 ser = new Codec_0048();
         Codec_0048 deser = new Codec_0048();
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, 5, 6, 7});
         TreeNode result = deser.deserialize(ser.serialize(root));
         log.info("result: {}", result);
     }
@@ -1414,7 +1413,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 049. 从根节点到叶节点的路径数字之和#2
     @Test
     void code0049() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, 5, 6, 7});
         log.info("result: {}", dfs_0049(root, 0));
     }
 
@@ -1432,7 +1431,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 050. 向下的路径节点之和#3
     @Test
     void code0050() {
-        TreeNode root = new TreeNode().build(new Integer[]{10, 5, -3, 3, 2, null, 11, 3, -2, null, 1});
+        TreeNode root = new TreeNode().build(new Integer[] {10, 5, -3, 3, 2, null, 11, 3, -2, null, 1});
         int targetSum = 8;
         Map<Integer, Integer> preSum = new HashMap<>();
         preSum.put(0, 1);
@@ -1456,7 +1455,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 051. 节点之和最大的路径#2
     @Test
     void code0051() {
-        TreeNode root = new TreeNode().build(new Integer[]{-10, 9, 20, null, null, 15, 7});
+        TreeNode root = new TreeNode().build(new Integer[] {-10, 9, 20, null, null, 15, 7});
         AtomicInteger result = new AtomicInteger(0);
         dfs_0051(root, result);
         log.info("result: {}", result.get());
@@ -1475,7 +1474,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 052. 展平二叉搜索树#3
     @Test
     void code0052() {
-        TreeNode root = new TreeNode().build(new Integer[]{1, 2, 3, 4, 5, 6, 7});
+        TreeNode root = new TreeNode().build(new Integer[] {1, 2, 3, 4, 5, 6, 7});
         TreeNode head = null, tail = null, cur = root;
         Deque<TreeNode> stack = new ArrayDeque<>();
         while (!stack.isEmpty() || cur != null) {
@@ -1499,7 +1498,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 053. 二叉搜索树中的中序后继#2
     @Test
     void code0053() {
-        TreeNode root = new TreeNode().build(new Integer[]{2, 1, 3});
+        TreeNode root = new TreeNode().build(new Integer[] {2, 1, 3});
         TreeNode cur = root, result = null, p = new TreeNode(2);
         while (cur != null) {
             if (cur.val <= p.val) {
@@ -1515,7 +1514,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 054. 所有大于等于节点的值之和#2
     @Test
     void code0054() {
-        TreeNode root = new TreeNode().build(new Integer[]{3, 2, 4, 1});
+        TreeNode root = new TreeNode().build(new Integer[] {3, 2, 4, 1});
         AtomicInteger sum = new AtomicInteger(0);
         dfs_0054(root, sum);
         log.info("result: {}", root);
@@ -1534,17 +1533,17 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 055. 二叉搜索树迭代器#2
     @Test
     void code0055() {
-        TreeNode root = new TreeNode().build(new Integer[]{7, 3, 15, null, null, 9, 20});
+        TreeNode root = new TreeNode().build(new Integer[] {7, 3, 15, null, null, 9, 20});
         BSTIterator_0055 bSTIterator = new BSTIterator_0055(root);
-        log.info("{}", bSTIterator.next());     // 返回 3
-        log.info("{}", bSTIterator.next());     // 返回 7
-        log.info("{}", bSTIterator.hasNext());  // 返回 True
-        log.info("{}", bSTIterator.next());     // 返回 9
-        log.info("{}", bSTIterator.hasNext());  // 返回 True
-        log.info("{}", bSTIterator.next());     // 返回 15
-        log.info("{}", bSTIterator.hasNext());  // 返回 True
-        log.info("{}", bSTIterator.next());     // 返回 20
-        log.info("{}", bSTIterator.hasNext());  // 返回 False
+        log.info("{}", bSTIterator.next()); // 返回 3
+        log.info("{}", bSTIterator.next()); // 返回 7
+        log.info("{}", bSTIterator.hasNext()); // 返回 True
+        log.info("{}", bSTIterator.next()); // 返回 9
+        log.info("{}", bSTIterator.hasNext()); // 返回 True
+        log.info("{}", bSTIterator.next()); // 返回 15
+        log.info("{}", bSTIterator.hasNext()); // 返回 True
+        log.info("{}", bSTIterator.next()); // 返回 20
+        log.info("{}", bSTIterator.hasNext()); // 返回 False
     }
 
     class BSTIterator_0055 {
@@ -1576,7 +1575,7 @@ public class Offer2_119_220903 {
     @Test
     void code0056() {
         Set<Integer> set = new HashSet<>();
-        TreeNode root = new TreeNode().build(new Integer[]{8, 6, 10, 5, 7, 9, 11});
+        TreeNode root = new TreeNode().build(new Integer[] {8, 6, 10, 5, 7, 9, 11});
         int k = 12;
         log.info("result: {}", find_0056(root, k, set));
     }
@@ -1626,8 +1625,7 @@ public class Offer2_119_220903 {
 
         private final TreeMap<Integer, Integer> map = new TreeMap<>();
 
-        public Calendar_0058() {
-        }
+        public Calendar_0058() {}
 
         public boolean book(int start, int end) {
             Map.Entry<Integer, Integer> ent = map.floorEntry(start);
@@ -1646,12 +1644,12 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 059. 数据流的第 K 大数值#1
     @Test
     void code0059() {
-        KthLargest_0059 kthLargest = new KthLargest_0059(3, new int[]{4, 5, 8, 2});
-        log.info("{}", kthLargest.add(3));   // return 4
-        log.info("{}", kthLargest.add(5));   // return 5
-        log.info("{}", kthLargest.add(10));  // return 5
-        log.info("{}", kthLargest.add(9));   // return 8
-        log.info("{}", kthLargest.add(4));   // return 8
+        KthLargest_0059 kthLargest = new KthLargest_0059(3, new int[] {4, 5, 8, 2});
+        log.info("{}", kthLargest.add(3)); // return 4
+        log.info("{}", kthLargest.add(5)); // return 5
+        log.info("{}", kthLargest.add(10)); // return 5
+        log.info("{}", kthLargest.add(9)); // return 8
+        log.info("{}", kthLargest.add(4)); // return 8
     }
 
     class KthLargest_0059 {
@@ -1678,7 +1676,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 060. 出现频率最高的 k 个数字#2
     @Test
     void code0060() {
-        int[] nums = new int[]{1, 1, 1, 2, 2, 3};
+        int[] nums = new int[] {1, 1, 1, 2, 2, 3};
         int k = 2;
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
@@ -1687,10 +1685,10 @@ public class Offer2_119_220903 {
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparing(x -> x[1]));
         map.forEach((num, freq) -> {
             if (q.size() == k) {
-                q.offer(new int[]{num, freq});
+                q.offer(new int[] {num, freq});
                 q.poll();
             } else {
-                q.offer(new int[]{num, freq});
+                q.offer(new int[] {num, freq});
             }
         });
         int[] result = q.stream().mapToInt(x -> x[0]).toArray();
@@ -1700,7 +1698,7 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 061. 和最小的 k 个数对#1
     @Test
     void code0061() {
-        int[] nums1 = new int[]{1, 7, 11}, nums2 = new int[]{2, 4, 6};
+        int[] nums1 = new int[] {1, 7, 11}, nums2 = new int[] {2, 4, 6};
         int k = 3;
         Queue<List<Integer>> q = new PriorityQueue<>((x, y) -> (y.get(0) + y.get(1)) - (x.get(0) + x.get(1)));
         for (int i = 0; i < nums1.length && i < k; i++) {
@@ -1719,11 +1717,11 @@ public class Offer2_119_220903 {
     void code0062() {
         Trie_0062 trie = new Trie_0062();
         trie.insert("apple");
-        log.info("{}", trie.search("apple"));   // 返回 True
-        log.info("{}", trie.search("app"));     // 返回 False
-        log.info("{}", trie.startsWith("app"));       // 返回 True
+        log.info("{}", trie.search("apple")); // 返回 True
+        log.info("{}", trie.search("app")); // 返回 False
+        log.info("{}", trie.startsWith("app")); // 返回 True
         trie.insert("app");
-        log.info("{}", trie.search("app"));     // 返回 True
+        log.info("{}", trie.search("app")); // 返回 True
     }
 
     class Trie_0062 {
@@ -1793,11 +1791,11 @@ public class Offer2_119_220903 {
     @Test
     void code0064() {
         MagicDictionary_0064 magicDictionary = new MagicDictionary_0064();
-        magicDictionary.buildDict(new String[]{"hello", "leetcode"});
-        log.info("{}", magicDictionary.search("hello"));       // 返回 False
-        log.info("{}", magicDictionary.search("hhllo"));       // 将第二个 'h' 替换为 'e' 可以匹配 "hello" ，所以返回 True
-        log.info("{}", magicDictionary.search("hell"));        // 返回 False
-        log.info("{}", magicDictionary.search("leetcoded"));   // 返回 False
+        magicDictionary.buildDict(new String[] {"hello", "leetcode"});
+        log.info("{}", magicDictionary.search("hello")); // 返回 False
+        log.info("{}", magicDictionary.search("hhllo")); // 将第二个 'h' 替换为 'e' 可以匹配 "hello" ，所以返回 True
+        log.info("{}", magicDictionary.search("hell")); // 返回 False
+        log.info("{}", magicDictionary.search("leetcoded")); // 返回 False
     }
 
     class MagicDictionary_0064 {
@@ -1841,9 +1839,139 @@ public class Offer2_119_220903 {
         }
     }
 
-    // 剑指 Offer II 065. 最短的单词编码#3
+    // 剑指 Offer II 065. 最短的单词编码#2
     @Test
     void code0065() {
+        String[] words = {"time", "me", "bell"};
+        Arrays.sort(words, (a, b) -> b.length() - a.length());
+        int result = 0;
+        Trie_0065 trie = new Trie_0065();
+        for (String w : words) {
+            result += trie.insert(w);
+        }
+        log.info("result: {}", result);
+    }
+
+    class Trie_0065 {
+        Trie_0065[] children = new Trie_0065[26];
+
+        int insert(String w) {
+            Trie_0065 node = this;
+            boolean pre = true;
+            for (int i = w.length() - 1; i >= 0; i--) {
+                int idx = w.charAt(i) - 'a';
+                if (node.children[idx] == null) {
+                    pre = false;
+                    node.children[idx] = new Trie_0065();
+                }
+                node = node.children[idx];
+            }
+            return pre ? 0 : w.length() + 1;
+        }
+    }
+
+    // 剑指 Offer II 066. 单词之和#2
+    @Test
+    void code0066() {
+        MapSum_0066 mapSum = new MapSum_0066();
+        mapSum.insert("apple", 3);
+        log.info("{}", mapSum.sum("ap")); // return 3 (apple = 3)
+        mapSum.insert("app", 2);
+        log.info("{}", mapSum.sum("ap")); // return 5 (apple + app = 3 + 2 = 5)
+    }
+
+    class MapSum_0066 {
+        private Map<String, Integer> data;
+        private Map<String, Integer> tmp;
+
+        public MapSum_0066() {
+            data = new HashMap<>();
+            tmp = new HashMap<>();
+        }
+
+        public void insert(String key, Integer val) {
+            int old = data.getOrDefault(key, 0);
+            data.put(key, val);
+            for (int i = 1; i < key.length() + 1; i++) {
+                String k = key.substring(0, i);
+                tmp.put(k, tmp.getOrDefault(k, 0) + (val - old));
+            }
+        }
+
+        public int sum(String prefix) {
+            return tmp.getOrDefault(prefix, 0);
+        }
+    }
+
+    // 剑指 Offer II 067. 最大的异或#3
+    @Test
+    void code0067() {
+        int[] nums = {3, 10, 5, 25, 2, 8};
+        Trie_0067 trie = new Trie_0067();
+        int result = 0;
+        for (int v : nums) {
+            trie.insert(v);
+            result = Math.max(result, trie.search(v));
+        }
+        log.info("result: {}", result);
+
+        result = 0;
+        int mask = 0;
+        for (int i = 30; i >= 0; i--) {
+            int cur = 1 << i;
+            // 期望的二进制前缀
+            mask ^= cur;
+            // 在当前前缀下, 数组内的前缀位数所有情况集合
+            Set<Integer> set = new HashSet<>();
+            for (int j = 0; j < nums.length; j++) {
+                set.add(mask & nums[j]);
+            }
+            // 期望最终异或值的从右数第i位为1, 再根据异或运算的特性推算假设是否成立
+            int flag = result | cur;
+            for (Integer prefix : set) {
+                if (set.contains(prefix ^ flag)) {
+                    result = flag;
+                    break;
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    class Trie_0067 {
+        Trie_0067[] children = new Trie_0067[2];
+
+        public void insert(int x) {
+            Trie_0067 node = this;
+            for (int i = 30; i >= 0; i--) {
+                int v = (x >> i) & 1;
+                if (node.children[v] == null) {
+                    node.children[v] = new Trie_0067();
+                }
+                node = node.children[v];
+            }
+        }
+
+        public int search(int x) {
+            Trie_0067 node = this;
+            int result = 0;
+            for (int i = 30; i >= 0; i--) {
+                int v = (x >> i) & 1;
+                if (node.children[v ^ 1] != null) {
+                    result = result << 1 | 1;
+                    node = node.children[v ^ 1];
+                } else {
+                    result <<= 1;
+                    node = node.children[v];
+                }
+            }
+            return result;
+        }
+    }
+
+    // 剑指 Offer II 068. 查找插入位置#1
+    @Test
+    void code0068() {
 
     }
 
