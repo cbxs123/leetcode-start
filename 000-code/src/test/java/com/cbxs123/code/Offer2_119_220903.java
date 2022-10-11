@@ -1972,6 +1972,55 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 068. 查找插入位置#1
     @Test
     void code0068() {
+        int[] nums = {1, 3, 5, 7};
+        int target = 6;
+        int left = 0, right = nums.length;
+        while (left < right) {
+            int mid = (left + right) >>> 1;
+            if (target <= nums[mid]) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        log.info("result: {}", left);
+    }
+
+    // 剑指 Offer II 069. 山峰数组的顶部#1
+    @Test
+    void code0069() {
+        int[] arr = {1, 3, 5, 4, 3, 2, 1};
+        int left = 1, right = arr.length - 2;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            if (arr[mid] > arr[mid + 1]) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        log.info("result: {}", left);
+    }
+
+    // 剑指 Offer II 070. 排序数组中只出现一次的数字#2
+    @Test
+    void code0070() {
+        int[] nums = {1, 1, 2, 3, 3, 4, 4, 8, 8};
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] != nums[mid ^ 1]) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        log.info("result: {}", nums[left]);
+    }
+
+    // 剑指 Offer II 071. 按权重生成随机数#2
+    @Test
+    void code0071() {
 
     }
 
