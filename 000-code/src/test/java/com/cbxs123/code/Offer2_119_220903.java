@@ -2021,6 +2021,129 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 071. 按权重生成随机数#2
     @Test
     void code0071() {
+        pickIndex_0071 solution = new pickIndex_0071(new int[] {1, 3});
+        log.info("{}", solution.pickIndex()); // 返回下标0概率为 1/4 ,返回下标1概率为 3/4 ,
+        log.info("{}", solution.pickIndex());
+        log.info("{}", solution.pickIndex());
+        log.info("{}", solution.pickIndex());
+        log.info("{}", solution.pickIndex());
+    }
+
+    class pickIndex_0071 {
+
+        private int[] preSum;
+
+        public pickIndex_0071(int[] w) {
+            int n = w.length;
+            preSum = new int[n + 1];
+            for (int i = 0; i < n; i++) {
+                preSum[i + 1] = preSum[i] + w[i];
+            }
+        }
+
+        public int pickIndex() {
+            int n = preSum.length;
+            int target = (int)(Math.random() * preSum[n - 1]) + 1;
+            int left = 0, right = n - 2;
+            while (left < right) {
+                int mid = (left + right) >> 1;
+                if (target <= preSum[mid + 1]) {
+                    right = mid;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            return left;
+        }
+    }
+
+    // 剑指 Offer II 072. 求平方根#2
+    @Test
+    void code0072() {
+        int x = 8;
+        int left = 0, right = x;
+        while (left < right) {
+            int mid = (left + right + 1) >>> 1;
+            if (x / mid < mid) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        log.info("result: {}", left);
+    }
+
+    // 剑指 Offer II 073. 狒狒吃香蕉#2
+    @Test
+    void code0073() {
+        int[] piles = {3, 6, 7, 11};
+        int h = 8, max = 0;
+        for (int pile : piles) {
+            max = Math.max(max, pile);
+        }
+        int left = 1, right = max;
+        while (left < right) {
+            int mid = (left + right) >>> 1;
+            int sum = 0;
+            for (int pile : piles) {
+                sum += (pile - 1) / mid + 1;
+            }
+            if (sum <= h) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        log.info("result: {}", left);
+    }
+
+    // 剑指 Offer II 074. 合并区间#2
+    @Test
+    void code0074() {
+        int[][] nums = {{1, 3}, {2, 6}, {8, 10}, {10, 15}, {16, 18}};
+        Arrays.sort(nums, Comparator.comparing(x -> x[0]));
+        int st = nums[0][0], ed = nums[0][1];
+        List<int[]> result = new ArrayList<>();
+        for (int i = 1; i < nums.length; i++) {
+            int s = nums[i][0], e = nums[i][1];
+            if (ed < s) {
+                result.add(new int[] {st, ed});
+                st = s;
+                ed = e;
+            } else {
+                ed = Math.max(ed, e);
+            }
+        }
+        result.add(new int[] {st, ed});
+        String res = result.stream().map(Arrays::toString).reduce((a, b) -> String.join(",", a, b)).get();
+        log.info("result: {}", res);
+    }
+
+    // 剑指 Offer II 075. 数组相对排序#2
+    @Test
+    void code0075() {
+        int[] arr1 = {2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19}, arr2 = {2, 1, 4, 3, 9, 6};
+        int[] map = new int[1001];
+        for (int x : arr1) {
+            ++map[x];
+        }
+        int i = 0;
+        for (int x : arr2) {
+            while (map[x]-- > 0) {
+                arr1[i++] = x;
+            }
+        }
+        for (int j = 0; j < map.length; j++) {
+            while (map[j]-- > 0) {
+                arr1[i++] = j;
+            }
+        }
+        log.info("result: {}", arr1);
+    }
+
+    // 剑指 Offer II 076. 数组中的第 k 大的数字#2
+    @Test
+    void code0076() {
 
     }
 
