@@ -2144,6 +2144,119 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 076. 数组中的第 k 大的数字#2
     @Test
     void code0076() {
+        int[] nums = {3, 2, 1, 5, 6, 4};
+        int k = 2;
+        int n = nums.length;
+        log.info("result: {}", quickSort_0076(nums, 0, n - 1, n - k));
+    }
+
+    private int quickSort_0076(int[] nums, int left, int right, int k) {
+        if (left == right) {
+            return nums[left];
+        }
+        int i = left - 1, j = right + 1;
+        int mid = nums[(left + right) >>> 1];
+        while (i < j) {
+            while (nums[++i] < mid);
+            while (nums[--j] > mid);
+            if (i < j) {
+                int t = nums[i];
+                nums[i] = nums[j];
+                nums[j] = t;
+            }
+        }
+        if (j < k) {
+            return quickSort_0076(nums, j + 1, right, k);
+        }
+        return quickSort_0076(nums, left, j, k);
+    }
+
+    // 剑指 Offer II 077. 链表排序#3
+    @Test
+    void code0077() {
+        ListNode head = new ListNode().build(new int[] {-1, 5, 3, 4, 0});
+        log.info("result: {}", sortList_0077(head));
+    }
+
+    private ListNode sortList_0077(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode t = slow.next;
+        slow.next = null;
+        ListNode l1 = sortList_0077(head);
+        ListNode l2 = sortList_0077(t);
+        return ListNode.merge(l1, l2);
+    }
+
+    // 剑指 Offer II 078. 合并排序链表#2
+    @Test
+    void code0078() {
+        ListNode l1 = new ListNode().build(new int[] {1, 4, 5});
+        ListNode l2 = new ListNode().build(new int[] {1, 3, 4});
+        ListNode l3 = new ListNode().build(new int[] {2, 6});
+        ListNode[] list = new ListNode[] {l1, l2, l3};
+        int n = list.length;
+        ListNode result = null;
+        if (n != 0) {
+            for (int i = 1; i < n; i++) {
+                list[i] = ListNode.merge(list[i - 1], list[i]);
+            }
+            result = list[n - 1];
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 079. 所有子集#2
+    @Test
+    void code0079() {
+        int[] nums = {1, 2, 3};
+        List<List<Integer>> result = new ArrayList<>();
+        dfs_0079(0, nums, new ArrayList<>(), result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0079(int i, int[] nums, List<Integer> t, List<List<Integer>> result) {
+        result.add(new ArrayList<>(t));
+        if (i == nums.length) {
+            return;
+        }
+        for (int j = i; j < nums.length; j++) {
+            t.add(nums[j]);
+            dfs_0079(j + 1, nums, t, result);
+            t.remove(t.size() - 1);
+        }
+    }
+
+    // 剑指 Offer II 080. 含有 k 个元素的组合#2
+    @Test
+    void code0080() {
+        int n = 4, k = 2;
+        List<List<Integer>> result = new ArrayList<>();
+        dfs_0080(1, n, k, new ArrayList<>(), result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0080(int i, int n, int k, List<Integer> t, List<List<Integer>> result) {
+        if (t.size() == k) {
+            result.add(new ArrayList<>(t));
+            return;
+        }
+        for (int j = i; j <= n; j++) {
+            t.add(j);
+            dfs_0080(j + 1, n, k, t, result);
+            t.remove(t.size() - 1);
+        }
+    }
+
+    // 剑指 Offer II 081. 允许重复选择元素的组合#3
+    @Test
+    void code0081() {
 
     }
 
