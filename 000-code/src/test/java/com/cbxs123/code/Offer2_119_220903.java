@@ -2254,9 +2254,143 @@ public class Offer2_119_220903 {
         }
     }
 
-    // 剑指 Offer II 081. 允许重复选择元素的组合#3
+    // 剑指 Offer II 081. 无重复数组允许重复选择元素的目标组合#3
     @Test
     void code0081() {
+        int[] nums = {2, 3, 5};
+        int target = 8;
+        List<List<Integer>> result = new ArrayList<>();
+        dfs_0081(0, 0, new ArrayList<>(), nums, target, result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0081(int sum, int index, List<Integer> tmp, int[] nums, int target, List<List<Integer>> result) {
+        if (sum == target) {
+            result.add(new ArrayList<>(tmp));
+            return;
+        }
+        if (sum > target) {
+            return;
+        }
+        for (int i = index; i < nums.length; i++) {
+            int num = nums[i];
+            tmp.add(num);
+            dfs_0081(sum + num, i, tmp, nums, target, result);
+            tmp.remove(tmp.size() - 1);
+        }
+    }
+
+    // 剑指 Offer II 082. 有重复元素数组不允许重复选择元素的目标组合#2
+    @Test
+    void code0082() {
+        int[] nums = {10, 1, 2, 7, 6, 1, 5};
+        int target = 8;
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);
+        dfs_0082(0, 0, new ArrayList<>(), nums, target, result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0082(int sum, int index, List<Integer> tmp, int[] nums, int target, List<List<Integer>> result) {
+        if (sum == target) {
+            result.add(new ArrayList<>(tmp));
+            return;
+        }
+        if (sum > target) {
+            return;
+        }
+        for (int i = index; i < nums.length; i++) {
+            if (i > index && nums[i] == nums[i - 1]) {
+                continue;
+            }
+            int num = nums[i];
+            tmp.add(num);
+            dfs_0082(sum + num, i + 1, tmp, nums, target, result);
+            tmp.remove(tmp.size() - 1);
+        }
+    }
+
+    // 剑指 Offer II 083. 没有重复元素集合的不重复全排列#2
+    @Test
+    void code0083() {
+        int[] nums = {1, 2, 3};
+        int n = nums.length;
+        boolean[] used = new boolean[n];
+        List<List<Integer>> result = new ArrayList<>();
+        dfs_0083(0, n, nums, used, new ArrayList<>(), result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0083(int cnt, int n, int[] nums, boolean[] used, List<Integer> tmp, List<List<Integer>> result) {
+        if (cnt == n) {
+            result.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (!used[i]) {
+                tmp.add(nums[i]);
+                used[i] = true;
+                dfs_0083(cnt + 1, n, nums, used, tmp, result);
+                used[i] = false;
+                tmp.remove(tmp.size() - 1);
+            }
+        }
+    }
+
+    // 剑指 Offer II 084. 含有重复元素集合的不重复全排列#2
+    @Test
+    void code0084() {
+        int[] nums = {1, 1, 3};
+        int n = nums.length;
+        boolean[] used = new boolean[n];
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        dfs_0084(0, n, nums, used, new ArrayList<>(), result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0084(int cnt, int n, int[] nums, boolean[] used, List<Integer> tmp, List<List<Integer>> result) {
+        if (cnt == n) {
+            result.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) {
+                continue;
+            }
+            tmp.add(nums[i]);
+            used[i] = true;
+            dfs_0084(cnt + 1, n, nums, used, tmp, result);
+            used[i] = false;
+            tmp.remove(tmp.size() - 1);
+        }
+    }
+
+    // 剑指 Offer II 085. 生成匹配的括号#2
+    @Test
+    void code0085() {
+        int n = 3;
+        List<String> result = new ArrayList<>();
+        dfs_0085(0, 0, n, "", result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0085(int left, int right, int n, String tmp, List<String> result) {
+        if (left == n && right == n) {
+            result.add(tmp);
+            return;
+        }
+        if (left < n) {
+            dfs_0085(left + 1, right, n, tmp + "(", result);
+        }
+        if (right < left) {
+            dfs_0085(left, right + 1, n, tmp + ")", result);
+        }
+    }
+
+    // 剑指 Offer II 086. 分割回文子字符串#3
+    @Test
+    void code0086() {
 
     }
 
