@@ -2391,7 +2391,38 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 086. 分割回文子字符串#3
     @Test
     void code0086() {
+        String s = "google";
+        int n = s.length();
+        List<List<String>> result = new ArrayList<>();
+        boolean[][] dp = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], true);
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i + 1; j < n; j++) {
+                dp[i][j] = s.charAt(i) == s.charAt(j) && dp[i + 1][j - 1];
+            }
+        }
+        dfs_0086(s, 0, n, new ArrayList<>(), result, dp);
+        String[][] res = new String[result.size()][];
+        for (int i = 0; i < result.size(); i++) {
+            res[i] = result.get(i).toArray(new String[0]);
+        }
+        log.info("result: {}", result);
+    }
 
+    private void dfs_0086(String s, int i, int n, List<String> tmp, List<List<String>> result, boolean[][] dp) {
+        if (i == n) {
+            result.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int j = i; j < n; j++) {
+            if (dp[i][j]) {
+                tmp.add(s.substring(i, j + 1));
+                dfs_0086(s, j + 1, n, tmp, result, dp);
+                tmp.remove(tmp.size() - 1);
+            }
+        }
     }
 
 }
