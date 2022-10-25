@@ -2425,4 +2425,104 @@ public class Offer2_119_220903 {
         }
     }
 
+    // 剑指 Offer II 087. 复原 IP#3
+    @Test
+    void code0087() {
+        String s = "10203040";
+        List<String> result = new ArrayList<>();
+        dfs_0087(s, new ArrayList<>(), result);
+        log.info("result: {}", result);
+    }
+
+    private void dfs_0087(String s, List<String> tmp, List<String> result) {
+        if (tmp.size() == 4) {
+            if ("".equals(s)) {
+                result.add(String.join(".", tmp));
+            }
+            return;
+        }
+        for (int i = 0; i < Math.min(4, s.length() + 1); i++) {
+            String c = s.substring(0, i);
+            if (check_0087(c)) {
+                tmp.add(c);
+                dfs_0087(s.substring(i), tmp, result);
+                tmp.remove(tmp.size() - 1);
+            }
+        }
+    }
+
+    private boolean check_0087(String s) {
+        if ("".equals(s)) {
+            return false;
+        }
+        if (Integer.parseInt(s) > 255) {
+            return false;
+        }
+        if (s.charAt(0) == '0' && s.length() > 1) {
+            return false;
+        }
+        return true;
+    }
+
+    // 剑指 Offer II 088. 爬楼梯的最少成本#1
+    @Test
+    void code0088() {
+        int[] cost = {1, 100, 1, 1, 1, 100, 1, 1, 100, 1};
+        int a = 0, b = 0, c = 0;
+        for (int i = 1; i < cost.length; i++) {
+            c = Math.min(a + cost[i - 1], b + cost[i]);
+            a = b;
+            b = c;
+        }
+        log.info("result: {}", c);
+    }
+
+    // 剑指 Offer II 089. 房屋偷盗#1
+    @Test
+    void code0089() {
+        int[] nums = {2, 7, 9, 3, 1};
+        int n = nums.length;
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+        if (n > 1) {
+            dp[1] = Math.max(nums[0], nums[1]);
+            for (int i = 2; i < n; i++) {
+                dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+            }
+        }
+        log.info("result: {}", dp[n - 1]);
+    }
+
+    // 剑指 Offer II 090. 环形房屋偷盗#3
+    @Test
+    void code0090() {
+        int[] nums = {2, 3, 4, 1};
+        int n = nums.length;
+        int result = nums[0];
+        if (n > 1) {
+            result = Math.max(rob_0090(nums, 0, n - 1), rob_0090(nums, 1, n));
+        }
+        log.info("result: {}", result);
+    }
+
+    private int rob_0090(int[] nums, int start, int end) {
+        if (start + 1 == end) {
+            return nums[start];
+        }
+        int n = end - start;
+        int[] dp = new int[n];
+        dp[0] = nums[start];
+        dp[1] = Math.max(nums[start], nums[start + 1]);
+        for (int i = 2; i < n; i++) {
+            dp[i] = Math.max(dp[i - 2] + nums[start + i], dp[i - 1]);
+        }
+        return dp[n - 1];
+    }
+
+    // 剑指 Offer II 091. 粉刷房子#1
+    @Test
+    void code0091() {
+
+    }
+
 }
