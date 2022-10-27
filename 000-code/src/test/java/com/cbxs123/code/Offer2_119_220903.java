@@ -2522,7 +2522,41 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 091. 粉刷房子#1
     @Test
     void code0091() {
-
+        int[][] costs = {{17, 2, 17}, {16, 16, 5}, {14, 3, 19}};
+        int r = 0, g = 0, b = 0, result = 0;
+        for (int[] cost : costs) {
+            int _r = r, _g = g, _b = b;
+            r = Math.min(_g, _b) + cost[0];
+            g = Math.min(_r, _b) + cost[1];
+            b = Math.min(_r, _g) + cost[2];
+        }
+        result = Math.min(r, Math.min(g, b));
+        log.info("result: {}", result);
     }
 
+    // 剑指 Offer II 092. 翻转字符#2
+    @Test
+    void code0092() {
+        String s = "010110";
+        int n = s.length();
+        int[] left = new int[n + 1];
+        int[] right = new int[n + 1];
+        int result = Integer.MAX_VALUE;
+        for (int i = 1; i <= n; i++) {
+            left[i] = left[i - 1] + (s.charAt(i - 1) == '1' ? 1 : 0);
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            right[i] = right[i + 1] + (s.charAt(i) == '0' ? 1 : 0);
+        }
+        for (int i = 0; i <= n; i++) {
+            result = Math.min(result, left[i] + right[i]);
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 093. 最长斐波那契数列#3
+    @Test
+    void code0093() {
+
+    }
 }
