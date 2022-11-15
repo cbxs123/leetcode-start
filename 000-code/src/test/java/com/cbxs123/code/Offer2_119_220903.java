@@ -2554,9 +2554,84 @@ public class Offer2_119_220903 {
         log.info("result: {}", result);
     }
 
-    // 剑指 Offer II 093. 最长斐波那契数列#3
+    // 剑指 Offer II 093. 最长斐波那契数列#2
     @Test
     void code0093() {
+        int[] arr = {1, 3, 7, 10, 12, 17, 29};
+        int n = arr.length;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(arr[i], i);
+        }
+        int[][] dp = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[j][i] = 2;
+            }
+        }
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                int delta = arr[i] - arr[j];
+                if (map.containsKey(delta)) {
+                    int k = map.get(delta);
+                    if (k < j) {
+                        dp[j][i] = dp[k][j] + 1;
+                        result = Math.max(result, dp[j][i]);
+                    }
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 094. 最少回文分割#2
+    @Test
+    void code0094() {
+        String s = "aab";
+        int n = s.length();
+        boolean[][] dp1 = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i; j < n; j++) {
+                dp1[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp1[i + 1][j - 1]);
+            }
+        }
+        int[] dp2 = new int[n];
+        for (int i = 0; i < n; i++) {
+            if (!dp1[0][i]) {
+                dp2[i] = i;
+                for (int j = 1; j <= i; j++) {
+                    if (dp1[j][i]) {
+                        dp2[i] = Math.min(dp2[i], dp2[j - 1] + 1);
+                    }
+                }
+            }
+        }
+        log.info("result: {}", dp2[n - 1]);
+    }
+
+    // 剑指 Offer II 095. 最长公共子序列#2
+    @Test
+    void code0095() {
+        String text1 = "abcde", text2 = "ace";
+        int m = text1.length(), n = text2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (text1.charAt(i - 1) == text2.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        log.info("result: {}", dp[m][n]);
+    }
+
+    // 剑指 Offer II 096. 字符串交织#3
+    @Test
+    void code0096() {
 
     }
+
 }
