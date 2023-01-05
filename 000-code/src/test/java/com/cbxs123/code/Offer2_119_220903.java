@@ -2628,9 +2628,106 @@ public class Offer2_119_220903 {
         log.info("result: {}", dp[m][n]);
     }
 
-    // 剑指 Offer II 096. 字符串交织#3
+    // 剑指 Offer II 096. 字符串交织#2
     @Test
     void code0096() {
+        String s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac";
+        int m = s1.length(), n = s2.length();
+        Map<Integer, Boolean> map = new HashMap<>();
+        boolean result = false;
+        if (m + n == s3.length()) {
+            result = dfs_0096(0, 0, m, n, s1, s2, s3, map);
+        }
+        log.info("result: {}", result);
+    }
+
+    private boolean dfs_0096(int i, int j, int m, int n, String s1, String s2, String s3, Map<Integer, Boolean> map) {
+        if (i == m && j == n) {
+            return true;
+        }
+        if (map.containsKey(i * 100 + j)) {
+            return map.get(i * 100 + j);
+        }
+        boolean res = (i < m && s1.charAt(i) == s3.charAt(i + j) && dfs_0096(i + 1, j, m, n, s1, s2, s3, map)
+            || (j < n && s2.charAt(j) == s3.charAt(i + j) && dfs_0096(i, j + 1, m, n, s1, s2, s3, map)));
+        map.put(i * 100 + j, res);
+        return res;
+    }
+
+    // 剑指 Offer II 097. 子序列的数目#1
+    @Test
+    void code0097() {
+        String s = "babgbag", t = "bag";
+        int m = s.length(), n = t.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            dp[i][0] = 1;
+        }
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                dp[i][j] = dp[i - 1][j];
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[i][j] += dp[i - 1][j - 1];
+                }
+            }
+        }
+        log.info("result: {}", dp[m][n]);
+    }
+
+    // 剑指 Offer II 098. 路径的数目#1
+    @Test
+    void code0098() {
+        int m = 3, n = 7;
+        int[][] dp = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(dp[i], 1);
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        log.info("result: {}", dp[m - 1][n - 1]);
+    }
+
+    // 剑指 Offer II 099. 最小路径之和#2
+    @Test
+    void code0099() {
+        int[][] grid = {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+        int m = grid.length, n = grid[0].length;
+        int[][] dp = new int[m][n];
+        dp[0][0] = grid[0][0];
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+        for (int j = 1; j < n; j++) {
+            dp[0][j] = dp[0][j - 1] + grid[0][j];
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+            }
+        }
+        log.info("result: {}", dp[m - 1][n - 1]);
+    }
+
+    // 剑指 Offer II 100. 三角形中最小路径之和#1
+    @Test
+    void code0100() {
+        int[][] triangle = {{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}};
+        int n = triangle.length;
+        int[] dp = new int[n + 1];
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = 0; j <= i; j++) {
+                dp[j] = Math.min(dp[j], dp[j + 1]) + triangle[i][j];
+            }
+        }
+        log.info("result: {}", dp[0]);
+    }
+
+    // 剑指 Offer II 101. 分割等和子串#2
+    @Test
+    void code0101() {
 
     }
 
