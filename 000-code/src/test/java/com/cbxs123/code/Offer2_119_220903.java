@@ -2728,6 +2728,32 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 101. 分割等和子串#2
     @Test
     void code0101() {
+        int[] nums = {1, 5, 11, 5};
+        int sum = 0;
+        boolean result = false;
+        for (int n : nums) {
+            sum += n;
+        }
+        if (sum % 2 == 0) {
+            int m = nums.length, n = (sum >> 1) + 1;
+            boolean[] dp = new boolean[n];
+            dp[0] = true;
+            if (nums[0] < n) {
+                dp[nums[0]] = true;
+            }
+            for (int i = 1; i < m; i++) {
+                for (int j = n - 1; j >= nums[i]; j--) {
+                    dp[j] = dp[j] || dp[j - nums[i]];
+                }
+            }
+            result = dp[n - 1];
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 102. 加减的目标值#2
+    @Test
+    void code0102() {
 
     }
 
