@@ -2754,6 +2754,30 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 102. 加减的目标值#2
     @Test
     void code0102() {
+        int[] nums = {1, 1, 1, 1, 1};
+        int target = 3;
+        int sum = 0;
+        int result = 0;
+        for (int n : nums) {
+            sum += n;
+        }
+        if (sum - target >= 0 && (sum - target) % 2 == 0) {
+            target = (sum - target) / 2 + 1;
+            int[] dp = new int[target];
+            dp[0] = 1;
+            for (int i = 1; i < nums.length + 1; i++) {
+                for (int j = target - 1; j >= nums[i - 1]; j--) {
+                    dp[j] += dp[j - nums[i - 1]];
+                }
+            }
+            result = dp[target - 1];
+        }
+        log.info("result: {}", result);
+    }
+
+    // 剑指 Offer II 103. 最少的硬币数目#2
+    @Test
+    void code0103() {
 
     }
 
