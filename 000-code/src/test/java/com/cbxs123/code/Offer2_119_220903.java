@@ -2778,6 +2778,22 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 103. 最少的硬币数目#2
     @Test
     void code0103() {
+        int[] coins = {1, 2, 5};
+        int amount = 11;
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, amount + 1);
+        dp[0] = 0;
+        for (int coin : coins) {
+            for (int j = coin; j <= amount; j++) {
+                dp[j] = Math.min(dp[j], dp[j - coin] + 1);
+            }
+        }
+        log.info("result: {}", dp[amount] > amount ? -1 : dp[amount]);
+    }
+
+    // 剑指 Offer II 104. 排列的数目
+    @Test
+    void code0104() {
 
     }
 
