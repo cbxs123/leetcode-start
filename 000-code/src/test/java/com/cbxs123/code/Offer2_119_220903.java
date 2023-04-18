@@ -2775,7 +2775,7 @@ public class Offer2_119_220903 {
         log.info("result: {}", result);
     }
 
-    // 剑指 Offer II 103. 最少的硬币数目#2
+    // 剑指 Offer II 103. 最少的硬币数目#1
     @Test
     void code0103() {
         int[] coins = {1, 2, 5};
@@ -2791,10 +2791,86 @@ public class Offer2_119_220903 {
         log.info("result: {}", dp[amount] > amount ? -1 : dp[amount]);
     }
 
-    // 剑指 Offer II 104. 排列的数目
+    // 剑指 Offer II 104. 排列的数目#1
     @Test
     void code0104() {
-
+        int[] nums = {1, 2, 3};
+        int target = 4;
+        int[] dp = new int[target + 1];
+        dp[0] = 1;
+        for (int i = 1; i <= target; i++) {
+            for (int num : nums) {
+                if (i >= num) {
+                    dp[i] += dp[i - num];
+                }
+            }
+        }
+        log.info("result: {}", dp[target]);
     }
 
+    // 剑指 Offer II 105. 岛屿的最大面积#2
+    @Test
+    void code0105() {
+        int[][] gird = {{0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+            {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+            {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}};
+        int m = gird.length, n = gird[0].length;
+        int result = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (gird[i][j] == 1) {
+                    result = Math.max(result, dfs_0105(i, j, m, n, gird));
+                }
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    private int dfs_0105(int i, int j, int m, int n, int[][] gird) {
+        gird[i][j] = 0;
+        int[] dirs = {-1, 0, 1, 0, -1};
+        int result = 1;
+        for (int k = 0; k < 4; k++) {
+            int x = i + dirs[k];
+            int y = j + dirs[k + 1];
+            if (x >= 0 && x < m && y >= 0 && y < n && gird[x][y] == 1) {
+                result += dfs_0105(x, y, m, n, gird);
+            }
+        }
+        return result;
+    }
+
+    // 剑指 Offer II 106. 二分图#3
+    @Test
+    void code0106() {
+        int[][] graph = {{1, 3}, {0, 2}, {1, 3}, {0, 2}};
+        int n = graph.length;
+        int[] p = new int[n];
+        boolean result = true;
+        for (int i = 0; i < n; i++) {
+            p[i] = i;
+        }
+        for (int u = 0; u < n; u++) {
+            int[] g = graph[u];
+            for (int v : g) {
+                if (find_0106(u, p) == find_0106(v, p)) {
+                    result = false;
+                    break;
+                }
+                p[find_0106(v, p)] = find_0106(g[0], p);
+            }
+            if (!result) {
+                break;
+            }
+        }
+        log.info("result: {}", result);
+    }
+
+    private int find_0106(int x, int[] p) {
+        if (p[x] != x) {
+            p[x] = find_0106(p[x], p);
+        }
+        return p[x];
+    }
 }
