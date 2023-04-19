@@ -2873,4 +2873,81 @@ public class Offer2_119_220903 {
         }
         return p[x];
     }
+
+    // 剑指 Offer II 107. 矩阵中的距离#3
+    @Test
+    void code0107() {
+        int[][] mat = {{0, 0, 0}, {0, 1, 0}, {1, 1, 1}};
+        int m = mat.length, n = mat[0].length;
+        int[][] result = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(result[i], -1);
+        }
+        Deque<int[]> q = new LinkedList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (mat[i][j] == 0) {
+                    result[i][j] = 0;
+                    q.offer(new int[] {i, j});
+                }
+            }
+        }
+        int[] dirs = new int[] {-1, 0, 1, 0, -1};
+        while (!q.isEmpty()) {
+            int[] t = q.poll();
+            for (int i = 0; i < 4; i++) {
+                int x = t[0] + dirs[i];
+                int y = t[1] + dirs[i + 1];
+                if (x >= 0 && x < m && y >= 0 && y < n && result[x][y] == -1) {
+                    result[x][y] = result[t[0]][t[1]] + 1;
+                    q.offer(new int[] {x, y});
+                }
+            }
+        }
+        Arrays.stream(result).forEach(x -> log.info("result: {}", x));
+    }
+
+    // 剑指 Offer II 108. 单词演变#3
+    @Test
+    void code0108() {
+        String beginWord = "hit";
+        String endWord = "cog";
+        List<String> wordList = Arrays.asList("hot", "dot", "dog", "lot", "log", "cog");
+        Set<String> words = new HashSet<>(wordList);
+        Queue<String> q = new LinkedList<>();
+        q.offer(beginWord);
+        int result = 1;
+        while (!q.isEmpty()) {
+            for (int i = q.size(); i > 0; i--) {
+                String s = q.poll();
+                char[] chars = s.toCharArray();
+                for (int j = 0; j < chars.length; j++) {
+                    char ch = chars[j];
+                    for (char k = 'a'; k <= 'z'; k++) {
+                        chars[j] = k;
+                        String t = new String(chars);
+                        if (!words.contains(t)) {
+                            continue;
+                        }
+                        if (endWord.endsWith(t)) {
+                            log.info("result:{}", result + 1);
+                            System.exit(1);
+                        }
+                        q.offer(t);
+                        words.remove(t);
+                    }
+                    chars[j] = ch;
+                }
+            }
+            result++;
+        }
+        log.info("result:{}", 0);
+    }
+
+    // 剑指 Offer II 109. 开密码锁$3
+    @Test
+    void code0109() {
+
+    }
+
 }
