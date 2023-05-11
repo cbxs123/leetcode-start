@@ -2944,9 +2944,91 @@ public class Offer2_119_220903 {
         log.info("result:{}", 0);
     }
 
-    // 剑指 Offer II 109. 开密码锁$3
+    // 剑指 Offer II 109. 开密码锁#3
     @Test
     void code0109() {
+        String[] deadends = {"0201", "0101", "0102", "1212", "2002"};
+        String target = "0202";
+        int result = -1;
+        Set<String> s = new HashSet<>(Arrays.asList(deadends));
+        if (!s.contains(target) && !s.contains("0000")) {
+            if (Objects.equals(target, "0000")) {
+                result = 0;
+            } else {
+                Set<String> visited = new HashSet<>();
+                Deque<String> q = new ArrayDeque<>();
+                q.offerLast("0000");
+                int step = 0;
+                while (!q.isEmpty()) {
+                    step++;
+                    for (int i = 0, n = q.size(); i < n; i++) {
+                        String status = q.pollFirst();
+                        for (String t : get(status)) {
+                            if (visited.contains(t) || s.contains(t)) {
+                                continue;
+                            }
+                            if (Objects.equals(t, target)) {
+                                log.info("result:{}", step);
+                                System.exit(0);
+                            }
+                            q.offerLast(t);
+                            visited.add(t);
+                        }
+                    }
+                }
+            }
+        }
+        log.info("result:{}", result);
+    }
+
+    private char prev0109(char c) {
+        return c == '0' ? '9' : (char)(c - 1);
+    }
+
+    private char next0109(char c) {
+        return c == '9' ? '0' : (char)(c + 1);
+    }
+
+    private List<String> get(String t) {
+        List<String> res = new ArrayList<>();
+        char[] chars = t.toCharArray();
+        for (int i = 0; i < 4; i++) {
+            char c = chars[i];
+            chars[i] = prev0109(c);
+            res.add(String.valueOf(chars));
+            chars[i] = next0109(c);
+            res.add(String.valueOf(chars));
+            chars[i] = c;
+        }
+        return res;
+    }
+
+    // 剑指 Offer II 110. 所有路径#2
+    @Test
+    void code0110() {
+        int[][] graph = {{4, 3, 1}, {3, 2, 4}, {3}, {4}, {}};
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
+        path.add(0);
+        dfs_0110(graph, result, 0, path);
+        log.info("result:{}", result);
+    }
+
+    private void dfs_0110(int[][] graph, List<List<Integer>> ans, int i, List<Integer> path) {
+        if (i == graph.length - 1) {
+            ans.add(new ArrayList<>(path));
+            return;
+        }
+        for (int j : graph[i]) {
+            path.add(j);
+            dfs_0110(graph, ans, j, path);
+            path.remove(path.size() - 1);
+        }
+    }
+
+    // 剑指 Offer II 111. 计算除法#3
+    @Test
+    void code0111() {
 
     }
 
