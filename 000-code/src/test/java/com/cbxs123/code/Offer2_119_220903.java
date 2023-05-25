@@ -3029,6 +3029,69 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 111. 计算除法#3
     @Test
     void code0111() {
+        List<List<String>> equations = new ArrayList<>();
+        equations.add(Arrays.asList("a", "b"));
+        equations.add(Arrays.asList("b", "c"));
+        double[] values = {2.0, 3.0};
+        List<List<String>> queries = new ArrayList<>();
+        queries.add(Arrays.asList("a", "c"));
+        queries.add(Arrays.asList("b", "a"));
+        queries.add(Arrays.asList("a", "e"));
+        queries.add(Arrays.asList("a", "a"));
+        queries.add(Arrays.asList("x", "x"));
+
+        int n = equations.size();
+        int[] p = new int[n << 1];
+        double[] w = new double[n << 1];
+        for (int i = 0; i < p.length; i++) {
+            p[i] = i;
+            w[i] = 1.0;
+        }
+        Map<String, Integer> mp = new HashMap<>(n << 1);
+        int idx = 0;
+        for (int i = 0; i < n; i++) {
+            List<String> e = equations.get(i);
+            String a = e.get(0), b = e.get(1);
+            if (!mp.containsKey(a)) {
+                mp.put(a, idx++);
+            }
+            if (!mp.containsKey(b)) {
+                mp.put(b, idx++);
+            }
+            int pa = find_0111(mp.get(a), p, w), pb = find_0111(mp.get(b), p, w);
+            if (pa == pb) {
+                continue;
+            }
+            p[pa] = pb;
+            w[pa] = w[mp.get(b)] * values[i] / w[mp.get(a)];
+        }
+        int m = queries.size();
+        double[] result = new double[m];
+        for (int i = 0; i < m; i++) {
+            String c = queries.get(i).get(0), d = queries.get(i).get(1);
+            Integer id1 = mp.get(c), id2 = mp.get(d);
+            if (id1 == null || id2 == null) {
+                result[i] = -1.0;
+            } else {
+                int pa = find_0111(id1, p, w), pb = find_0111(id2, p, w);
+                result[i] = pa == pb ? w[id1] / w[id2] : -1.0;
+            }
+        }
+        log.info("result:{}", result);
+    }
+
+    private int find_0111(int x, int[] p, double[] w) {
+        if (p[x] != x) {
+            int origin = p[x];
+            p[x] = find_0111(p[x], p, w);
+            w[x] *= w[origin];
+        }
+        return p[x];
+    }
+
+    // 剑指 Offer II 112. 最长递增路径#2
+    @Test
+    void code0112() {
 
     }
 
