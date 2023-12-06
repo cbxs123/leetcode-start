@@ -3092,6 +3092,73 @@ public class Offer2_119_220903 {
     // 剑指 Offer II 112. 最长递增路径#2
     @Test
     void code0112() {
+        int[][] matrix = {{3, 4, 5}, {3, 2, 6}, {2, 2, 1}};
+        int m = matrix.length, n = matrix[0].length;
+        int[][] memo = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(memo[i], -1);
+        }
+        int result = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                result = Math.max(result, dfs_0112(i, j, matrix, memo, m, n));
+            }
+        }
+        log.info("result:{}", result);
+    }
+
+    private int dfs_0112(int i, int j, int[][] matrix, int[][] memo, int m, int n) {
+        if (memo[i][j] != -1) {
+            return memo[i][j];
+        }
+        int result = 1;
+        int[] dirs = {-1, 0, 1, 0, -1};
+        for (int k = 0; k < 4; k++) {
+            int x = i + dirs[k], y = j + dirs[k + 1];
+            if (x >= 0 && x < m && y >= 0 && y < n && matrix[x][y] > matrix[i][j]) {
+                result = Math.max(result, dfs_0112(x, y, matrix, memo, m, n) + 1);
+            }
+        }
+        memo[i][j] = result;
+        return result;
+    }
+
+    // 剑指 Offer II 113. 课程顺序#3
+    @Test
+    void code0113() {
+        int num = 4;
+        int[][] pre = {{1, 0}, {2, 0}, {3, 1}, {3, 2}};
+        List<Integer>[] after = new List[num];
+        Arrays.setAll(after, k -> new ArrayList<>());
+        int[] depend = new int[num];
+        for (int[] p : pre) {
+            int a = p[0], b = p[1];
+            after[b].add(a);
+            ++depend[a];
+        }
+        Deque<Integer> high = new ArrayDeque<>();
+        for (int i = 0; i < num; i++) {
+            if (depend[i] == 0) {
+                high.offer(i);
+            }
+        }
+        int[] result = new int[num];
+        int cnt = 0;
+        while (!high.isEmpty()) {
+            int i = high.poll();
+            result[cnt++] = i;
+            for (int j : after[i]) {
+                if (--depend[j] == 0) {
+                    high.offer(j);
+                }
+            }
+        }
+        log.info("result:{}", cnt == num ? result : new int[0]);
+    }
+
+    // 剑指 Offer II 114. 外星文字典#3
+    @Test
+    void code0114() {
 
     }
 
