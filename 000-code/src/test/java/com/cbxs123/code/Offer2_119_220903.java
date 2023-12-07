@@ -11,6 +11,8 @@ import com.cbxs123.code.common.MultiNode;
 import com.cbxs123.code.common.TreeNode;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.test.context.event.annotation.PrepareTestInstance;
+import org.yaml.snakeyaml.events.Event;
 
 /**
  * @author cbxs123
@@ -3160,6 +3162,120 @@ public class Offer2_119_220903 {
     @Test
     void code0114() {
 
+    }
+
+    // 剑指 Offer II 115. 重建序列#2
+    @Test
+    void code0115() {
+        int[] nums = {1, 2, 3};
+        int[][] seqs = {{1, 2}, {1, 3}, {2, 3}};
+        int n = nums.length;
+        int[] depend = new int[n];
+        List<Integer>[] high = new List[n];
+        Arrays.setAll(high, k -> new ArrayList<>());
+        for (int[] seq : seqs) {
+            for (int i = 1; i < seq.length; i++) {
+                int a = seq[i - 1] - 1, b = seq[i] - 1;
+                high[a].add(b);
+                depend[b]++;
+            }
+        }
+        Deque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            if (depend[i] == 0) {
+                q.offer(i);
+            }
+        }
+        boolean result = true;
+        while (!q.isEmpty()) {
+            if (q.size() > 1) {
+                result = false;
+            }
+            int i = q.poll();
+            for (int j : high[i]) {
+                if (--depend[j] == 0) {
+                    q.offer(j);
+                }
+            }
+        }
+        log.info("result:{}", result);
+    }
+
+    // 剑指 Offer II 116. 朋友圈#2
+    @Test
+    void code0116() {
+        int[][] isConnected = {{1, 1, 0}, {1, 1, 0}, {0, 0, 1}};
+        int n = isConnected.length;
+        boolean[] vis = new boolean[n];
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                dfs_0116(i, n, isConnected, vis);
+                ++result;
+            }
+        }
+        log.info("result:{}", result);
+    }
+
+    private void dfs_0116(int i, int n, int[][] isConnected, boolean[] vis) {
+        vis[i] = true;
+        for (int j = 0; j < n; j++) {
+            if (!vis[j] && isConnected[i][j] == 1) {
+                dfs_0116(j, n, isConnected, vis);
+            }
+        }
+    }
+
+    // 剑指 Offer II 117. 相似的字符串#3
+    @Test
+    void code0117() {
+
+    }
+
+    // 剑指 Offer II 118. 多余的边#2
+    @Test
+    void code0118() {
+        int[][] edges = {{1, 2}, {1, 3}, {2, 3}};
+        int[] p = new int[1010];
+        for (int i = 0; i < p.length; i++) {
+            p[i] = i;
+        }
+        int[] result = null;
+        for (int[] e : edges) {
+            int a = e[0], b = e[1];
+            if (find_0118(a, p) == find_0118(b, p)) {
+                result = e;
+            }
+            p[find_0118(a, p)] = find_0118(b, p);
+        }
+        log.info("result:{}", result);
+    }
+
+    private int find_0118(int x, int[] p) {
+        if (p[x] != x) {
+            p[x] = find_0118(p[x], p);
+        }
+        return p[x];
+    }
+
+    // 剑指 Offer II 119. 最长连续序列#2
+    @Test
+    void code0119() {
+        int[] nums = {100, 4, 200, 1, 3, 2};
+        int n = nums.length;
+        Arrays.sort(nums);
+        int result = 1, t = 1;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] == nums[i - 1]) {
+                continue;
+            }
+            if (nums[i] == nums[i - 1] + 1) {
+                result = Math.max(result, ++t);
+            } else {
+                t = 1;
+            }
+        }
+        log.info("result:{}", result);
     }
 
 }
