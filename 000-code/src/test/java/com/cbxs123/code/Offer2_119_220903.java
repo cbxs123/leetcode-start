@@ -3278,5 +3278,10 @@ public class Offer2_119_220903 {
         log.info("result:{}", result);
     }
 
+    // 剑指 Offer II 120
+    @Test
+    void code0120() {
+
+    }
 
 }
